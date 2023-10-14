@@ -11,7 +11,7 @@ function App() {
   const [count, setCount] = useState(0);
 
   return (
-    <CssVarsProvider>
+    <CssVarsProvider defaultMode={"system"}>
       <CssBaseline>
         <NetworkDetector>
           <ErrorBoundary fallback={<h1>Something went wrong</h1>}>
