@@ -11,11 +11,11 @@ function ModeToggle() {
   const { mode, setMode } = useColorScheme();
   return (
     <Button
-      variant="outlined"
       color="neutral"
+      variant="plain"
       onClick={() => setMode(mode === "dark" ? "light" : "dark")}
     >
-      {mode === "dark" ? "Turn light" : "Turn dark"}
+      {mode === "dark" ? "☽" : "☀"}
     </Button>
   );
 }
@@ -23,7 +23,7 @@ function ModeToggle() {
 export default function NavigationBar() {
   return (
     <Box component="nav" aria-label="Vreact Template" sx={{ flexGrow: 1 }}>
-      <List role="menubar" variant="outlined" orientation="horizontal">
+      <List role="menubar" orientation="horizontal">
         <ListItem role="none">
           <ListItemButton
             role="menuitem"
