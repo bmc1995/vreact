@@ -5,25 +5,29 @@ import ListItem from "@mui/joy/ListItem";
 import ListItemButton from "@mui/joy/ListItemButton";
 import Person from "@mui/icons-material/Person";
 import viteLogo from "/vite.svg";
-import { Button, useColorScheme } from "@mui/joy";
+import { useColorScheme } from "@mui/joy";
 
 function ModeToggle() {
   const { mode, setMode } = useColorScheme();
   return (
-    <Button
+    <ListItemButton
       color="neutral"
       variant="plain"
       onClick={() => setMode(mode === "dark" ? "light" : "dark")}
     >
-      {mode === "dark" ? "☽" : "☀"}
-    </Button>
+      <h3>{mode === "dark" ? "☀️" : "🌙"}</h3>
+    </ListItemButton>
   );
 }
 
 export default function NavigationBar() {
   return (
     <Box component="nav" aria-label="Vreact Template" sx={{ flexGrow: 1 }}>
-      <List role="menubar" orientation="horizontal">
+      <List
+        role="menubar"
+        orientation="horizontal"
+        sx={{ padding: 0, marginRight: ".75rem" }}
+      >
         <ListItem role="none">
           <ListItemButton
             role="menuitem"
@@ -51,7 +55,7 @@ export default function NavigationBar() {
           </ListItemButton>
         </ListItem>
         <ListDivider sx={{ margin: 0 }} />
-        <ListItem role="none">
+        <ListItem role="none" sx={{ padding: 0 }}>
           <ModeToggle />
           <ListItemButton
             role="menuitem"
