@@ -4,10 +4,11 @@ import NavigationBar from "../features/navbar/components/NavigationBar";
 import { Header } from "./Header";
 import { Footer } from "./Footer";
 import { Main } from "./Main";
+import { Stack } from "@mui/system";
 
 export const Layout: FC<PropsWithChildren<unknown>> = ({ children }) => {
   return (
-    <Box>
+    <Box height={"inherit"}>
       <Header>
         <NavigationBar />
       </Header>
