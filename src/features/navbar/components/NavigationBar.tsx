@@ -22,11 +22,17 @@ function ModeToggle() {
 
 export default function NavigationBar() {
   return (
-    <Box component="nav" aria-label="Vreact Template" sx={{ flexGrow: 1 }}>
+    <Box
+      component="nav"
+      aria-label="Vreact Template"
+      sx={{
+        flexGrow: 1,
+      }}
+    >
       <List
         role="menubar"
         orientation="horizontal"
-        sx={{ padding: 0, marginRight: ".75rem" }}
+        sx={{ padding: 0, marginRight: ".75rem", height: "75px" }}
       >
         <ListItem role="none">
           <ListItemButton

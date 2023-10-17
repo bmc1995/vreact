@@ -1,7 +1,17 @@
+import { Box } from "@mui/joy";
 import { FC, PropsWithChildren } from "react";
 
 export const Main: FC<PropsWithChildren<unknown>> = ({ children }) => {
   return (
-    <main style={{ zIndex: "1", backgroundColor: "black" }}>{children}</main>
+    <Box
+      sx={(theme) => ({
+        height: "inherit",
+        zIndex: "1",
+        backgroundColor: theme.palette.background.backdrop,
+      })}
+      component={"main"}
+    >
+      {children}
+    </Box>
   );
 };

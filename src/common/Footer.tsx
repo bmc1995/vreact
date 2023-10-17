@@ -4,13 +4,12 @@ import { FC, PropsWithChildren } from "react";
 export const Footer: FC<PropsWithChildren<unknown>> = ({ children }) => {
   return (
     <Box
-      sx={{
-        bottom: "0",
-        left: "0",
-        right: "0",
+      sx={(theme) => ({
         zIndex: -1,
-        position: "fixed",
-      }}
+        height: "5rem",
+        borderTop: "2px solid white",
+        backgroundColor: theme.palette.neutral.softBg,
+      })}
       component={"footer"}
     >
       {children}

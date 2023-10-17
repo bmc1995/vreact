@@ -13,7 +13,7 @@ export const Layout: FC<PropsWithChildren<unknown>> = ({ children }) => {
         <NavigationBar />
       </Header>
       <Main>{children}</Main>
-      <Footer>{"<3"}</Footer>
+      <Footer>{"This is a footer"}</Footer>
     </Box>
   );
 };
