@@ -6,7 +6,8 @@ export const Header: FC<PropsWithChildren<unknown>> = ({ children }) => {
     <Box
       sx={(theme) => ({
         paddingInline: 0,
-        backgroundColor: theme.palette.neutral.softBg,
+        background: theme.palette.background.surface,
+        borderBottom: `1px solid ${theme.palette.primary.outlinedBorder}`,
       })}
       component={"header"}
     >

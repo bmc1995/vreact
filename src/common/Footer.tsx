@@ -7,8 +7,8 @@ export const Footer: FC<PropsWithChildren<unknown>> = ({ children }) => {
       sx={(theme) => ({
         zIndex: -1,
         height: "5rem",
-        borderTop: "2px solid white",
-        backgroundColor: theme.palette.neutral.softBg,
+        background: theme.palette.background.surface,
+        borderTop: `1px solid ${theme.palette.primary.outlinedBorder}`,
       })}
       component={"footer"}
     >
