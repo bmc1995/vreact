@@ -1,9 +1,9 @@
-import { Box, Typography } from "@mui/joy";
+import { Box } from "@mui/joy";
 import { SignUpForm } from "../components/SignUpForm";
 
 export const SignUpPage = () => {
   return (
-    <Box sx={{ display: "flex", justifyContent: "center" }}>
+    <Box display={"flex"} justifyContent={"center"} paddingTop={"2rem"}>
       <SignUpForm />
     </Box>
   );
