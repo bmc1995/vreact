@@ -10,13 +10,43 @@ import {
   FormHelperText,
   FormLabel,
   Input,
-  Option,
   Select,
   Stack,
   Typography,
 } from "@mui/joy";
+import { BaseSyntheticEvent, useReducer } from "react";
+import { generateOptionsFromEnum } from "../utils/generateOptionsFromEnum";
+import { signUpFormReducer } from "../utils/reducers";
+import { ReducerActionTypes } from "../utils/enums";
+import { initialSignUpFormState } from "../utils/initialState";
 
 export const SignUpForm = () => {
+  const [state, dispatch] = useReducer(
+    signUpFormReducer,
+    initialSignUpFormState
+  );
+
+  const handleSelectChange = (field: string) => (_: any, value: any) => {
+    dispatch({
+      type: ReducerActionTypes.UPDATE,
+      payload: { field, value },
+    });
+  };
+
+  const handleChange =
+    (field: string) => (e: BaseSyntheticEvent | InputEvent) => {
+      dispatch({
+        type: ReducerActionTypes.UPDATE,
+        payload: { field, value: e.target.value },
+      });
+    };
+
+  const handleSubmit = (e: BaseSyntheticEvent | SubmitEvent) => {
+    e.preventDefault();
+    console.log(state);
+    dispatch({ type: ReducerActionTypes.SUBMIT });
+  };
+
   return (
     <Card>
       <CardContent>
@@ -31,12 +61,7 @@ export const SignUpForm = () => {
             gridTemplateColumns: { sm: "repeat(2, minmax(80px, 1fr))" },
             gap: "1.5rem",
           }}
-          onSubmit={(e) => {
-            e.preventDefault();
-            const formData = new FormData(e.currentTarget);
-            const formJson = Object.fromEntries((formData as any).entries());
-            console.log(JSON.stringify(formJson));
-          }}
+          onSubmit={handleSubmit}
         >
           <FormControl>
             <FormLabel>Email Address</FormLabel>
@@ -44,7 +69,8 @@ export const SignUpForm = () => {
               autoComplete="email"
               type="email"
               placeholder="jane@example.com"
-              required
+              onChange={handleChange("email")}
+              //   required
             />
           </FormControl>
           <Stack
@@ -59,11 +85,16 @@ export const SignUpForm = () => {
                 autoComplete="new-password"
                 type="password"
                 placeholder="Password"
+                onChange={handleChange("password")}
               />
             </FormControl>
             <FormControl>
               <FormLabel>Verify Password</FormLabel>
-              <Input autoComplete="new-password" type="password" />
+              <Input
+                autoComplete="new-password"
+                type="password"
+                onChange={handleChange("verifyPassword")}
+              />
               <FormHelperText>
                 <Typography startDecorator={<InfoOutlined />}>
                   Passwords must match.
@@ -74,11 +105,11 @@ export const SignUpForm = () => {
           <Divider sx={{ gridColumn: "1/-1" }}>Optional</Divider>
           <FormControl>
             <FormLabel>First Name</FormLabel>
-            <Input />
+            <Input onChange={handleChange("firstName")} />
           </FormControl>
           <FormControl>
             <FormLabel>Last Name</FormLabel>
-            <Input />
+            <Input onChange={handleChange("lastName")} />
           </FormControl>
           <FormControl>
             <FormLabel>Country</FormLabel>
@@ -87,17 +118,17 @@ export const SignUpForm = () => {
               disabled={false}
               placeholder="Choose Country…"
               variant="outlined"
+              onChange={handleSelectChange("country")}
             >
-              <Option value={"United States"}>United States</Option>
-              <Option value={"Canada"}>Canada</Option>
-              <Option value={"France"}>France</Option>
-              <Option value={"Mexico"}>Mexico</Option>
-              <Option value={"Russia"}>Russia</Option>
+              {generateOptionsFromEnum()}
             </Select>
           </FormControl>
           <FormControl>
             <FormLabel>Cell Phone</FormLabel>
-            <Input placeholder="(555) 555-5555" />
+            <Input
+              onChange={handleChange("cellPhone")}
+              placeholder="(555) 555-5555"
+            />
           </FormControl>
           <CardActions buttonFlex={1} sx={{ gridColumn: "1/-1" }}>
             <Button variant="outlined" type="submit">
