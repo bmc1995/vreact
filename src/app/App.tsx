@@ -1,10 +1,10 @@
 import "../styles/App.css";
 import ErrorBoundary from "../features/error-boundary/components/ErrorBoundary";
-import { Layout } from "../common/Layout";
+import { Layout } from "../common/Layout/Layout";
 import { CssBaseline, CssVarsProvider } from "@mui/joy";
 import { NetworkDetector } from "../features/network-detector/NetworkDetector";
 import { SignUpPage } from "../features/auth/pages/SignUpPage";
-
+// import { LoginPage } from "../features/auth/pages/LoginPage";
 function App() {
   // const [count, setCount] = useState(0);
 
@@ -14,6 +14,7 @@ function App() {
         <NetworkDetector>
           <ErrorBoundary fallback={<h1>Something went wrong</h1>}>
             <Layout>
+              {/* <LoginPage /> */}
               <SignUpPage />
             </Layout>
           </ErrorBoundary>
