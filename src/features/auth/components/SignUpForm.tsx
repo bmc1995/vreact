@@ -1,3 +1,5 @@
+import { BaseSyntheticEvent, useReducer } from "react";
+
 import { InfoOutlined } from "@mui/icons-material";
 import {
   Box,
@@ -14,18 +16,26 @@ import {
   Stack,
   Typography,
 } from "@mui/joy";
-import { BaseSyntheticEvent, useReducer } from "react";
+
 import { generateOptionsFromEnum } from "../utils/generateOptionsFromEnum";
-import { signUpFormReducer } from "../utils/reducers";
+import { SignUpFormState, signUpFormReducer } from "../utils/reducers";
 import { ReducerActionTypes } from "../utils/enums";
-import { initialSignUpFormState } from "../utils/initialState";
+const initialSignUpFormState: SignUpFormState = {
+  email: "",
+  password: "",
+  verifyPassword: "",
+  firstName: "",
+  lastName: "",
+  country: "",
+  cellPhone: "",
+};
 
 export const SignUpForm = () => {
   const [state, dispatch] = useReducer(
     signUpFormReducer,
     initialSignUpFormState
   );
-
+  //Native event == 'ChangeEvent'
   const handleSelectChange = (field: string) => (_: any, value: any) => {
     dispatch({
       type: ReducerActionTypes.UPDATE,
