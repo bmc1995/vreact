@@ -1,6 +1,6 @@
 import { Box } from "@mui/joy";
 import { FC, PropsWithChildren } from "react";
-import NavigationBar from "../features/navbar/components/NavigationBar";
+import NavigationBar from "../../features/navbar/components/NavigationBar";
 import { Header } from "./Header";
 import { Footer } from "./Footer";
 import { Main } from "./Main";
