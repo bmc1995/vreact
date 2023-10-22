@@ -4,17 +4,20 @@ import Solid from "../../assets/solid-emblem.svg";
 export const SolidConnectBtn = () => {
   return (
     <Button
-      startDecorator={<img width={"25px"} src={Solid} />}
-      variant="solid"
-      sx={(theme) => ({
+      startDecorator={<img height={"25px"} src={Solid} />}
+      variant="outlined"
+      color="neutral"
+      size="sm"
+      sx={{
         justifyContent: "space-between",
-        backgroundColor: "#7c4dff",
-        border: "1px solid #7c4dff",
-        ":hover": { border: "1px solid white", backgroundColor: "#7c4dff" },
-        ":active": { backgroundColor: "#744ce1" },
-      })}
+      }}
     >
-      Connect Pod
+      Connect Solid Pod
     </Button>
   );
+  // backgroundColor: "hsla(256, 100.00%, 65.10%, 0.30)",
+  // ":hover": {
+  //   backgroundColor: "hsla(256, 100.00%, 65.10%, 0.45)",
+  // },
+  // ":active": { backgroundColor: "hsla(256, 100.00%, 65.10%, 0.60)" },
 };

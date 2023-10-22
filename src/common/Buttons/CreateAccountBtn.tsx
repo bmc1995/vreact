@@ -1,10 +1,10 @@
 import { Button } from "@mui/joy";
-import Google from "../../assets/google-emblem.svg";
+import viteLogo from "/vite.svg";
 
-export const GoogleSignInBtn = () => {
+export const CreateAccountBtn = () => {
   return (
     <Button
-      startDecorator={<img width={"25px"} src={Google} />}
+      startDecorator={<img width={"25px"} src={viteLogo} />}
       variant="outlined"
       color="neutral"
       size="sm"
@@ -12,7 +12,7 @@ export const GoogleSignInBtn = () => {
         justifyContent: "space-between",
       }}
     >
-      Continue with Google
+      Create Account
     </Button>
   );
 };
