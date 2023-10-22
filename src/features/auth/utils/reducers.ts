@@ -15,6 +15,11 @@ export interface SignUpFormState {
   cellPhone: string;
 }
 
+export interface LoginFormState {
+  email: string;
+  password: string;
+}
+
 export function signUpFormReducer(
   formState: SignUpFormState,
   action: ReducerAction
@@ -37,6 +42,31 @@ export function signUpFormReducer(
         ...formState,
       };
 
+    default:
+      console.error("ACTION TYPE NOT RECOGNIZED: ", action.type);
+      return formState;
+  }
+}
+
+export function loginFormReducer(
+  formState: LoginFormState,
+  action: ReducerAction
+): LoginFormState {
+  switch (action.type) {
+    case ReducerActionTypes.UPDATE:
+      const { field, value } = action.payload!;
+      return {
+        ...formState,
+        [field]: value,
+      };
+    case ReducerActionTypes.VALIDATE:
+      return {
+        ...formState,
+      };
+    case ReducerActionTypes.SUBMIT:
+      return {
+        ...formState,
+      };
     default:
       console.error("ACTION TYPE NOT RECOGNIZED: ", action.type);
       return formState;
