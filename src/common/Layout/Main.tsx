@@ -6,8 +6,8 @@ export const Main: FC<PropsWithChildren<unknown>> = ({ children }) => {
     <Box
       sx={(theme) => ({
         height: "inherit",
-        zIndex: "1",
-        backgroundColor: theme.palette.background.backdrop,
+        zIndex: 1,
+        background: theme.palette.background.backdrop,
       })}
       component={"main"}
     >
