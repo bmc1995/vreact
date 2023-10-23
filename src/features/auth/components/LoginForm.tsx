@@ -1,4 +1,4 @@
-import { BaseSyntheticEvent, useReducer } from "react";
+import { BaseSyntheticEvent, useReducer, useState } from "react";
 import { InfoOutlined } from "@mui/icons-material";
 import {
   Box,
@@ -12,6 +12,7 @@ import {
   Input,
   Stack,
   Typography,
+  FormHelperText,
 } from "@mui/joy";
 import { LoginFormState, loginFormReducer } from "../utils/reducers";
 import { ReducerActionTypes } from "../utils/enums";
@@ -27,6 +28,8 @@ const initialState: LoginFormState = {
 export const LoginForm = () => {
   const [state, dispatch] = useReducer(loginFormReducer, initialState);
 
+  const [emailError, setEmailError] = useState(false)
+
   const handleSubmit = (e: BaseSyntheticEvent | SubmitEvent) => {
     e.preventDefault();
     console.log(state);
@@ -39,6 +42,15 @@ export const LoginForm = () => {
         type: ReducerActionTypes.UPDATE,
         payload: { field, value: e.target.value },
       });
+
+      if (field === "email") {
+        const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/
+        if (!emailPattern.test(e.target.value)) {
+          setEmailError(true)
+        } else {
+          setEmailError(false)
+        }
+      }
     };
 
   return (
@@ -63,8 +75,9 @@ export const LoginForm = () => {
               type="email"
               placeholder="jane@example.com"
               onChange={handleChange("email")}
-              //   required
+              required
             />
+             {(emailError) ? (<FormHelperText>Invalid Email Address</FormHelperText>) : <FormHelperText></FormHelperText> }
           </FormControl>
           <FormControl>
             <FormLabel>Password</FormLabel>

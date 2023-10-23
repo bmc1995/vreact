@@ -1,6 +1,6 @@
-import { BaseSyntheticEvent, useReducer } from "react";
+import { BaseSyntheticEvent, useReducer, useState } from "react"
 
-import { InfoOutlined } from "@mui/icons-material";
+import { InfoOutlined } from "@mui/icons-material"
 import {
   Box,
   Button,
@@ -15,11 +15,11 @@ import {
   Select,
   Stack,
   Typography,
-} from "@mui/joy";
+} from "@mui/joy"
 
-import { generateOptionsFromEnum } from "../utils/generateOptionsFromEnum";
-import { SignUpFormState, signUpFormReducer } from "../utils/reducers";
-import { ReducerActionTypes } from "../utils/enums";
+import { generateOptionsFromEnum } from "../utils/generateOptionsFromEnum"
+import { SignUpFormState, signUpFormReducer } from "../utils/reducers"
+import { ReducerActionTypes } from "../utils/enums"
 const initialSignUpFormState: SignUpFormState = {
   email: "",
   password: "",
@@ -28,34 +28,46 @@ const initialSignUpFormState: SignUpFormState = {
   lastName: "",
   country: "",
   cellPhone: "",
-};
+}
 
 export const SignUpForm = () => {
   const [state, dispatch] = useReducer(
     signUpFormReducer,
     initialSignUpFormState
-  );
+  )
+
+  const [emailError, setEmailError] = useState(false)
+
   //Native event == 'ChangeEvent'
   const handleSelectChange = (field: string) => (_: any, value: any) => {
     dispatch({
       type: ReducerActionTypes.UPDATE,
       payload: { field, value },
-    });
-  };
+    })
+  }
 
   const handleChange =
     (field: string) => (e: BaseSyntheticEvent | InputEvent) => {
       dispatch({
         type: ReducerActionTypes.UPDATE,
         payload: { field, value: e.target.value },
-      });
-    };
+      })
+    
+      if (field === "email") {
+        const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/
+        if (!emailPattern.test(e.target.value)) {
+          setEmailError(true)
+        } else {
+          setEmailError(false)
+        }
+      }
+    }
 
   const handleSubmit = (e: BaseSyntheticEvent | SubmitEvent) => {
-    e.preventDefault();
-    console.log(state);
-    dispatch({ type: ReducerActionTypes.SUBMIT });
-  };
+    e.preventDefault()
+    console.log(state)
+    dispatch({ type: ReducerActionTypes.SUBMIT })
+  }
 
   return (
     <Card>
@@ -80,8 +92,9 @@ export const SignUpForm = () => {
               type="email"
               placeholder="jane@example.com"
               onChange={handleChange("email")}
-              //   required
+              required
             />
+            {(emailError) ? (<FormHelperText>Invalid Email Address</FormHelperText>) : <FormHelperText></FormHelperText> }
           </FormControl>
           <Stack
             sx={{ gridColumn: "1/-1" }}
@@ -151,5 +164,5 @@ export const SignUpForm = () => {
         </Box>
       </CardContent>
     </Card>
-  );
-};
+  )
+}
