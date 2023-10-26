@@ -1,14 +1,11 @@
 import { FC, PropsWithChildren, useEffect, useRef, useState } from "react";
-import { useDispatch } from "react-redux";
-import { addToast } from "../../app/redux/slices/toastSlice";
+import { dispatchToast } from "../../common/notifications/utils/dispatchToast";
 
 export const NetworkDetector: FC<PropsWithChildren<unknown>> = ({
   children,
 }) => {
   const [isDisconnected, setDisconnectedStatus] = useState(false);
   const prevDisconnectionStatus = useRef(false);
-
-  const dispatch = useDispatch();
 
   const handleConnectionChange = () => {
     setDisconnectedStatus(!navigator.onLine);
@@ -19,25 +16,9 @@ export const NetworkDetector: FC<PropsWithChildren<unknown>> = ({
     window.addEventListener("offline", handleConnectionChange);
 
     if (isDisconnected) {
-      dispatch(
-        addToast({
-          color: "danger",
-          msg: "Internet Connection Lost",
-          variant: "outlined",
-          id: Math.floor(Math.random() * 10000).toString(),
-          duration: 8000,
-        })
-      );
+      dispatchToast("Internet Connection Lost.", "danger");
     } else if (prevDisconnectionStatus.current) {
-      dispatch(
-        addToast({
-          color: "success",
-          msg: "Internet Connection Restored",
-          variant: "outlined",
-          id: Math.floor(Math.random() * 10000).toString(),
-          duration: 8000,
-        })
-      );
+      dispatchToast("Internet Connection Restored.", "success");
     }
 
     prevDisconnectionStatus.current = isDisconnected;
