@@ -1,4 +1,4 @@
-function generateUUID() {
+export function generateUUID() {
   let time = new Date().getTime();
   if (
     typeof performance !== "undefined" &&
