@@ -1,16 +1,16 @@
 import { ColorPaletteProp } from "@mui/joy";
-import { useDispatch } from "react-redux";
 import { addToast } from "../../../app/redux/slices/toastSlice";
-const dispatch = useDispatch();
+import { generateUUID } from "../../utils/generateUUID";
+import store from "../../../app/redux/store";
 
 export const dispatchToast = (msg: string, color: ColorPaletteProp): void => {
-  dispatch(
+  store.dispatch(
     addToast({
       color,
       msg,
       variant: "outlined",
       id: generateUUID(),
-      duration: 8000,
+      duration: 5500,
     })
   );
 };
