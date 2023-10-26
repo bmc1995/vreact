@@ -1,4 +1,4 @@
-import { useId, useRef, useEffect } from "react";
+import { useRef, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import {
   ToastAlert,
@@ -9,14 +9,13 @@ import { Alert } from "@mui/joy";
 
 export const Toast = ({ toastProps }: { toastProps: ToastAlert }) => {
   const { msg, color, variant, id, duration = 0 } = toastProps;
-  const keyId = useId();
   const dispatch = useDispatch();
-  const dd = useRef<HTMLDivElement | null>(null);
+  const nodeRef = useRef<HTMLDivElement | null>(null);
 
   function triggerTransition() {
-    let opacity = dd.current!.style.opacity;
+    let opacity = nodeRef.current!.style.opacity;
     opacity = !!Number(opacity) ? "0" : "1";
-    return setTimeout(() => (dd.current!.style.opacity = opacity), 0);
+    return setTimeout(() => (nodeRef.current!.style.opacity = opacity));
   }
 
   useEffect(() => {
@@ -40,13 +39,12 @@ export const Toast = ({ toastProps }: { toastProps: ToastAlert }) => {
 
   return (
     <Alert
-      key={keyId}
-      ref={dd}
+      ref={nodeRef}
       color={color}
       variant={variant}
       sx={{
         opacity: 0,
-        transitionProperty: "all",
+        transitionProperty: "opacity",
         transitionDuration: "0.5s",
         transitionTimingFunction: "ease-in-out",
       }}
