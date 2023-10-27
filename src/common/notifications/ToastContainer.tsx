@@ -9,13 +9,14 @@ export const ToastContainer = () => {
   return (
     <Stack
       position={"fixed"}
+      width={"250px"}
       zIndex={1}
       bottom={25}
       left={25}
       display={toastQueue.length ? "flex" : "none"}
     >
-      {toastQueue.map((alert) => (
-        <Toast key={alert.id} toastProps={alert} />
+      {toastQueue.map((toast) => (
+        <Toast key={toast.id} toastProps={toast} />
       ))}
     </Stack>
   );
