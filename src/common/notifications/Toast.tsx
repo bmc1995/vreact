@@ -1,53 +1,65 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import {
-  ToastAlert,
-  hideToast,
-  removeToast,
-} from "../../app/redux/slices/toastSlice";
+import { ToastAlert, removeToast } from "../../app/redux/slices/toastSlice";
 import { Alert } from "@mui/joy";
+import { Close } from "@mui/icons-material";
 
 export const Toast = ({ toastProps }: { toastProps: ToastAlert }) => {
   const { msg, color, variant, id, duration = 0 } = toastProps;
-  const dispatch = useDispatch();
-  const nodeRef = useRef<HTMLDivElement | null>(null);
 
-  function triggerTransition() {
-    let opacity = nodeRef.current!.style.opacity;
-    opacity = !!Number(opacity) ? "0" : "1";
-    return setTimeout(() => (nodeRef.current!.style.opacity = opacity));
+  const [opacity, setOpacity] = useState(0);
+  const dispatch = useDispatch();
+
+  const hideTimerIdRef = useRef<number | null>(null);
+  const removeTimerIdRef = useRef<number | null>(null);
+
+  function handleClickRemove() {
+    if (hideTimerIdRef.current) clearTimeout(hideTimerIdRef.current);
+    setOpacity(0);
+    hideTimerIdRef.current = setTimeout(() => {
+      removeTimerIdRef.current = setTimeout(() => {
+        dispatch(removeToast(id));
+      }, 50);
+    }, 200);
   }
 
   useEffect(() => {
-    const transitionId = triggerTransition();
-
-    const hideId = setTimeout(() => {
-      triggerTransition();
-      dispatch(hideToast(id));
-    }, duration);
-
-    const removeId = setTimeout(() => {
-      dispatch(removeToast(id));
-    }, duration + 600);
+    setOpacity(1);
+    if (duration > 0) {
+      hideTimerIdRef.current = setTimeout(() => {
+        handleClickRemove();
+      }, duration);
+    }
 
     return () => {
-      clearTimeout(hideId);
-      clearTimeout(removeId);
-      clearTimeout(transitionId);
+      if (hideTimerIdRef.current) clearTimeout(hideTimerIdRef.current);
+      if (removeTimerIdRef.current) clearTimeout(removeTimerIdRef.current);
     };
-  }, []);
+  }, [dispatch, duration, id]);
 
   return (
     <Alert
-      ref={nodeRef}
-      color={color}
-      variant={variant}
-      sx={{
-        opacity: 0,
+      endDecorator={
+        <Close
+          onClick={handleClickRemove}
+          cursor={"pointer"}
+          accentHeight={"240px"}
+          sx={{
+            border: "1px solid gray",
+            borderRadius: "2px",
+            ":hover": { color: "ButtonText" },
+            ":active": { borderColor: "ButtonFace" },
+          }}
+        />
+      }
+      style={{
+        opacity,
         transitionProperty: "opacity",
-        transitionDuration: "0.5s",
+        transitionDuration: "0.3s",
         transitionTimingFunction: "ease-in-out",
       }}
+      color={color}
+      variant={variant}
     >
       {msg}
     </Alert>
