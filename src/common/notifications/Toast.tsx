@@ -44,6 +44,9 @@ export const Toast = ({ toastProps }: { toastProps: ToastAlert }) => {
           onClick={handleClickRemove}
           cursor={"pointer"}
           accentHeight={"240px"}
+          tabIndex={0}
+          role="button"
+          aria-description="Close Alert"
           sx={{
             border: "1px solid gray",
             borderRadius: "2px",
@@ -60,6 +63,8 @@ export const Toast = ({ toastProps }: { toastProps: ToastAlert }) => {
       }}
       color={color}
       variant={variant}
+      role={color === "danger" ? "alert" : "status"}
+      aria-live={color === "danger" ? "assertive" : "polite"}
     >
       {msg}
     </Alert>
