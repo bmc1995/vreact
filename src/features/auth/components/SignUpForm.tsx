@@ -1,6 +1,25 @@
-import { BaseSyntheticEvent, useReducer, useState } from "react"
+import { useForm, SubmitHandler, Controller } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 
-import { InfoOutlined } from "@mui/icons-material"
+const CountryEnum = z.enum(["USA", "Canada", "Mexico"]);
+
+const formSchema = z
+  .object({
+    email: z.string().email(),
+    password: z.string().min(8),
+    confirmPassword: z.string().min(8),
+    firstName: z.string().optional(),
+    lastName: z.string().optional(),
+    country: CountryEnum.optional(),
+    cellPhone: z.string().optional(),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
+  });
+
+import { InfoOutlined } from "@mui/icons-material";
 import {
   Box,
   Button,
@@ -15,59 +34,18 @@ import {
   Select,
   Stack,
   Typography,
-} from "@mui/joy"
+} from "@mui/joy";
 
-import { generateOptionsFromEnum } from "../utils/generateOptionsFromEnum"
-import { SignUpFormState, signUpFormReducer } from "../utils/reducers"
-import { ReducerActionTypes } from "../utils/enums"
-const initialSignUpFormState: SignUpFormState = {
-  email: "",
-  password: "",
-  verifyPassword: "",
-  firstName: "",
-  lastName: "",
-  country: "",
-  cellPhone: "",
-}
+import { generateOptionsFromEnum } from "../utils/generateOptionsFromEnum";
 
 export const SignUpForm = () => {
-  const [state, dispatch] = useReducer(
-    signUpFormReducer,
-    initialSignUpFormState
-  )
-
-  const [emailError, setEmailError] = useState(false)
-
-  //Native event == 'ChangeEvent'
-  const handleSelectChange = (field: string) => (_: any, value: any) => {
-    dispatch({
-      type: ReducerActionTypes.UPDATE,
-      payload: { field, value },
-    })
-  }
-
-  const handleChange =
-    (field: string) => (e: BaseSyntheticEvent | InputEvent) => {
-      dispatch({
-        type: ReducerActionTypes.UPDATE,
-        payload: { field, value: e.target.value },
-      })
-    
-      if (field === "email") {
-        const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/
-        if (!emailPattern.test(e.target.value)) {
-          setEmailError(true)
-        } else {
-          setEmailError(false)
-        }
-      }
-    }
-
-  const handleSubmit = (e: BaseSyntheticEvent | SubmitEvent) => {
-    e.preventDefault()
-    console.log(state)
-    dispatch({ type: ReducerActionTypes.SUBMIT })
-  }
+  const {
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm({
+    resolver: zodResolver(formSchema),
+  });
 
   return (
     <Card>
@@ -77,80 +55,125 @@ export const SignUpForm = () => {
         </Typography>
         <Divider inset="none" />
         <Box
+          width={"600px"}
           component={"form"}
           sx={{
             display: "grid",
             gridTemplateColumns: { sm: "repeat(2, minmax(80px, 1fr))" },
             gap: "1.5rem",
           }}
-          onSubmit={handleSubmit}
+          onSubmit={handleSubmit((data) => {
+            console.log(data);
+          })}
         >
-          <FormControl>
+          <FormControl error={!!errors.email}>
             <FormLabel>Email Address</FormLabel>
-            <Input
-              autoComplete="email"
-              type="email"
-              placeholder="jane@example.com"
-              onChange={handleChange("email")}
-              required
+            <Controller
+              name="email"
+              control={control}
+              defaultValue=""
+              render={({ field }) => (
+                <Input {...field} type="email" autoComplete="email" />
+              )}
             />
-            {(emailError) ? (<FormHelperText>Invalid Email Address</FormHelperText>) : <FormHelperText></FormHelperText> }
-          </FormControl>
-          <Stack
-            sx={{ gridColumn: "1/-1" }}
-            direction={{ sm: "row" }}
-            justifyContent={"space-between"}
-            alignContent={"space-between"}
-          >
-            <FormControl>
-              <FormLabel>Create Password</FormLabel>
-              <Input
-                autoComplete="new-password"
-                type="password"
-                placeholder="Password"
-                onChange={handleChange("password")}
-              />
-            </FormControl>
-            <FormControl>
-              <FormLabel>Verify Password</FormLabel>
-              <Input
-                autoComplete="new-password"
-                type="password"
-                onChange={handleChange("verifyPassword")}
-              />
+            {errors.email && (
               <FormHelperText>
-                <Typography startDecorator={<InfoOutlined />}>
-                  Passwords must match.
-                </Typography>
+                <InfoOutlined />
+                {errors.email.message?.toString()}
               </FormHelperText>
+            )}
+          </FormControl>
+          <Stack sx={{ gridColumn: "1" }} justifyContent={"space-between"}>
+            <FormControl error={!!errors.password}>
+              <FormLabel>Create Password</FormLabel>
+              <Controller
+                name="password"
+                control={control}
+                defaultValue=""
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    type="password"
+                    autoComplete="new-password"
+                  />
+                )}
+              />
+              {errors.password && (
+                <FormHelperText>
+                  <InfoOutlined />
+                  {errors.password.message?.toString()}
+                </FormHelperText>
+              )}
+            </FormControl>
+            <FormControl error={!!errors.confirmPassword}>
+              <FormLabel>Confirm Password</FormLabel>
+              <Controller
+                name="confirmPassword"
+                control={control}
+                defaultValue=""
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    type="password"
+                    autoComplete="new-password"
+                  />
+                )}
+              />
+              {errors.confirmPassword && (
+                <FormHelperText>
+                  <InfoOutlined />
+                  {errors.confirmPassword.message?.toString()}
+                </FormHelperText>
+              )}
             </FormControl>
           </Stack>
           <Divider sx={{ gridColumn: "1/-1" }}>Optional</Divider>
           <FormControl>
             <FormLabel>First Name</FormLabel>
-            <Input onChange={handleChange("firstName")} />
+            <Controller
+              name="firstName"
+              control={control}
+              defaultValue=""
+              render={({ field }) => <Input {...field} />}
+            />
           </FormControl>
           <FormControl>
             <FormLabel>Last Name</FormLabel>
-            <Input onChange={handleChange("lastName")} />
+            <Controller
+              name="lastName"
+              control={control}
+              defaultValue=""
+              render={({ field }) => <Input {...field} />}
+            />
           </FormControl>
           <FormControl>
             <FormLabel>Country</FormLabel>
-            <Select
-              color="neutral"
-              disabled={false}
-              placeholder="Choose Country…"
-              variant="outlined"
-              onChange={handleSelectChange("country")}
-            >
-              {generateOptionsFromEnum()}
-            </Select>
+            <Controller
+              name="country"
+              control={control}
+              defaultValue=""
+              render={({ field }) => (
+                <Select
+                  {...field}
+                  color="neutral"
+                  disabled={false}
+                  placeholder="Choose Country…"
+                  variant="outlined"
+                >
+                  {generateOptionsFromEnum()}
+                </Select>
+              )}
+            />
           </FormControl>
           <FormControl>
             <FormLabel>Cell Phone</FormLabel>
-            <Input
-              onChange={handleChange("cellPhone")}
-              placeholder="(555) 555-5555"
+            <Controller
+              name="cellPhone"
+              control={control}
+              defaultValue=""
+              render={({ field }) => (
+                <Input {...field} placeholder="(555) 555-5555" />
+              )}
             />
           </FormControl>
           <CardActions buttonFlex={1} sx={{ gridColumn: "1/-1" }}>
@@ -164,5 +187,5 @@ export const SignUpForm = () => {
         </Box>
       </CardContent>
     </Card>
-  )
-}
+  );
+};
