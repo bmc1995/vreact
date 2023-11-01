@@ -11,7 +11,7 @@ const LoginFormSchema = z
     password: z
       .string({ required_error: "Password is required.", coerce: true })
       .trim()
-      .regex(/\s/, "Invalid Password.")
+      .regex(/^[^\s]+$/, "Invalid Password.")
       .min(8, "Invalid Password."),
   })
   .strict()
