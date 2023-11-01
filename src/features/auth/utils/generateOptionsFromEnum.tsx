@@ -13,7 +13,7 @@ export const generateOptionsFromEnum = () => {
   }
   return opts;
 };
-//TODO DRY
+//TODO D.R.Y
 import { ControllerRenderProps } from "react-hook-form";
 export const generateOptionsFromEnumRHF = (
   fieldProp?: ControllerRenderProps<any, any>
