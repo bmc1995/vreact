@@ -1,5 +1,3 @@
-import { BaseSyntheticEvent, useReducer, useState } from "react";
-import { InfoOutlined } from "@mui/icons-material";
 import {
   Box,
   Button,
@@ -14,44 +12,27 @@ import {
   Typography,
   FormHelperText,
 } from "@mui/joy";
-import { LoginFormState, loginFormReducer } from "../utils/reducers";
-import { ReducerActionTypes } from "../utils/enums";
+import { InfoOutlined } from "@mui/icons-material";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm, SubmitHandler, Controller } from "react-hook-form";
+
 import { SolidConnectBtn } from "../../../common/Buttons/SolidConnectBtn";
 import { GoogleSignInBtn } from "../../../common/Buttons/GoogleSignInBtn";
 import { CreateAccountBtn } from "../../../common/Buttons/CreateAccountBtn";
-
-const initialState: LoginFormState = {
-  email: "",
-  password: "",
-};
+import formSchema from "../utils/zod/LoginSchema";
 
 export const LoginForm = () => {
-  const [state, dispatch] = useReducer(loginFormReducer, initialState);
+  const {
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm({
+    resolver: zodResolver(formSchema),
+  });
 
-  const [emailError, setEmailError] = useState(false)
-
-  const handleSubmit = (e: BaseSyntheticEvent | SubmitEvent) => {
-    e.preventDefault();
-    console.log(state);
-    dispatch({ type: ReducerActionTypes.SUBMIT });
+  const onSubmit: SubmitHandler<any> = (data) => {
+    console.log(data);
   };
-
-  const handleChange =
-    (field: string) => (e: BaseSyntheticEvent | InputEvent) => {
-      dispatch({
-        type: ReducerActionTypes.UPDATE,
-        payload: { field, value: e.target.value },
-      });
-
-      if (field === "email") {
-        const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/
-        if (!emailPattern.test(e.target.value)) {
-          setEmailError(true)
-        } else {
-          setEmailError(false)
-        }
-      }
-    };
 
   return (
     <Card>
@@ -66,22 +47,43 @@ export const LoginForm = () => {
             display: "grid",
             gap: "1.5rem",
           }}
-          onSubmit={handleSubmit}
+          onSubmit={handleSubmit(onSubmit)}
         >
-          <FormControl>
+          <FormControl error={!!errors.email}>
             <FormLabel>Email Address</FormLabel>
-            <Input
-              autoComplete="email"
-              type="email"
-              placeholder="jane@example.com"
-              onChange={handleChange("email")}
-              required
+            <Controller
+              name="email"
+              control={control}
+              defaultValue=""
+              render={({ field }) => (
+                <Input {...field} type="email" autoComplete="email" />
+              )}
             />
-             {(emailError) ? (<FormHelperText>Invalid Email Address</FormHelperText>) : <FormHelperText></FormHelperText> }
+            {errors.email && (
+              <FormHelperText>
+                {errors.email.message?.toString()}
+              </FormHelperText>
+            )}
           </FormControl>
-          <FormControl>
+          <FormControl error={!!errors.password}>
             <FormLabel>Password</FormLabel>
-            <Input type="password" onChange={handleChange("password")} />
+            <Controller
+              name="password"
+              control={control}
+              defaultValue=""
+              render={({ field }) => (
+                <Input
+                  {...field}
+                  type="password"
+                  autoComplete="current-password"
+                />
+              )}
+            />
+            {errors.password && (
+              <FormHelperText>
+                {errors.password.message?.toString()}
+              </FormHelperText>
+            )}
           </FormControl>
           <CardActions buttonFlex={1} sx={{ gridColumn: "1/-1" }}>
             <Button variant="outlined" type="submit">

@@ -1,23 +1,5 @@
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-
-const CountryEnum = z.enum(["USA", "Canada", "Mexico"]);
-
-const formSchema = z
-  .object({
-    email: z.string().email(),
-    password: z.string().min(8),
-    confirmPassword: z.string().min(8),
-    firstName: z.string().optional(),
-    lastName: z.string().optional(),
-    country: CountryEnum.optional(),
-    cellPhone: z.string().optional(),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords do not match",
-    path: ["confirmPassword"],
-  });
 
 import { InfoOutlined } from "@mui/icons-material";
 import {
@@ -36,16 +18,31 @@ import {
   Typography,
 } from "@mui/joy";
 
-import { generateOptionsFromEnum } from "../utils/generateOptionsFromEnum";
+import formSchema from "../utils/zod/SignupSchema";
+import { generateOptionsFromEnumRHF } from "../utils/generateOptionsFromEnum";
+import { z } from "zod";
+import SignupFormSchema from "../utils/zod/SignupSchema";
 
 export const SignUpForm = () => {
   const {
     handleSubmit,
     control,
     formState: { errors },
-  } = useForm({
+  } = useForm<z.infer<typeof SignupFormSchema>>({
     resolver: zodResolver(formSchema),
+    defaultValues: {
+      email: "",
+      cellPhone: "",
+      country: "",
+      confirmPassword: "",
+      password: "",
+      firstName: "",
+      lastName: "",
+    },
   });
+
+  const onSubmit: SubmitHandler<z.infer<typeof SignupFormSchema>> = (data) =>
+    console.log(data);
 
   return (
     <Card>
@@ -62,16 +59,13 @@ export const SignUpForm = () => {
             gridTemplateColumns: { sm: "repeat(2, minmax(80px, 1fr))" },
             gap: "1.5rem",
           }}
-          onSubmit={handleSubmit((data) => {
-            console.log(data);
-          })}
+          onSubmit={handleSubmit(onSubmit, console.error)}
         >
           <FormControl error={!!errors.email}>
             <FormLabel>Email Address</FormLabel>
             <Controller
               name="email"
               control={control}
-              defaultValue=""
               render={({ field }) => (
                 <Input {...field} type="email" autoComplete="email" />
               )}
@@ -89,7 +83,6 @@ export const SignUpForm = () => {
               <Controller
                 name="password"
                 control={control}
-                defaultValue=""
                 render={({ field }) => (
                   <Input
                     {...field}
@@ -110,7 +103,6 @@ export const SignUpForm = () => {
               <Controller
                 name="confirmPassword"
                 control={control}
-                defaultValue=""
                 render={({ field }) => (
                   <Input
                     {...field}
@@ -133,7 +125,6 @@ export const SignUpForm = () => {
             <Controller
               name="firstName"
               control={control}
-              defaultValue=""
               render={({ field }) => <Input {...field} />}
             />
           </FormControl>
@@ -142,7 +133,6 @@ export const SignUpForm = () => {
             <Controller
               name="lastName"
               control={control}
-              defaultValue=""
               render={({ field }) => <Input {...field} />}
             />
           </FormControl>
@@ -151,16 +141,15 @@ export const SignUpForm = () => {
             <Controller
               name="country"
               control={control}
-              defaultValue=""
               render={({ field }) => (
                 <Select
-                  {...field}
+                  // {...field}
                   color="neutral"
                   disabled={false}
                   placeholder="Choose Country…"
                   variant="outlined"
                 >
-                  {generateOptionsFromEnum()}
+                  {generateOptionsFromEnumRHF(field)}
                 </Select>
               )}
             />
@@ -170,7 +159,6 @@ export const SignUpForm = () => {
             <Controller
               name="cellPhone"
               control={control}
-              defaultValue=""
               render={({ field }) => (
                 <Input {...field} placeholder="(555) 555-5555" />
               )}
