@@ -5,7 +5,7 @@ import { CssBaseline, CssVarsProvider } from "@mui/joy";
 import { NetworkDetector } from "../features/network-detector/NetworkDetector";
 import { SignUpPage } from "../features/auth/pages/SignUpPage";
 import { ToastContainer } from "../common/notifications/ToastContainer";
-// import { LoginPage } from "../features/auth/pages/LoginPage";
+import { LoginPage } from "../features/auth/pages/LoginPage";
 function App() {
   return (
     <CssVarsProvider defaultMode={"system"}>
@@ -14,8 +14,8 @@ function App() {
           <ErrorBoundary fallback={<h1>Something went wrong</h1>}>
             <Layout>
               <ToastContainer />
-              {/* <LoginPage /> */}
-              <SignUpPage />
+              <LoginPage />
+              {/* <SignUpPage /> */}
             </Layout>
           </ErrorBoundary>
         </NetworkDetector>
