@@ -11,6 +11,8 @@ import {
   Stack,
   Typography,
   FormHelperText,
+  Modal,
+  ModalDialog,
 } from "@mui/joy";
 import { InfoOutlined } from "@mui/icons-material";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -20,8 +22,11 @@ import { SolidConnectBtn } from "../../../common/Buttons/SolidConnectBtn";
 import { GoogleSignInBtn } from "../../../common/Buttons/GoogleSignInBtn";
 import { CreateAccountBtn } from "../../../common/Buttons/CreateAccountBtn";
 import formSchema from "../utils/zod/LoginSchema";
+import { useState } from "react";
+import { ForgetPasswordForm } from "./ForgotPasswordForm";
 
 export const LoginForm = () => {
+  const [showForgotModal, setShowForgotModal] = useState<boolean>(false);
   const {
     handleSubmit,
     control,
@@ -43,6 +48,7 @@ export const LoginForm = () => {
         <Divider inset="none" />
         <Box
           component={"form"}
+          width={"300px"}
           sx={{
             display: "grid",
             gap: "1.5rem",
@@ -94,6 +100,14 @@ export const LoginForm = () => {
             </Button>
           </CardActions>
         </Box>
+        <Typography
+          onClick={() => setShowForgotModal(true)}
+          marginTop={"1rem"}
+          fontSize={"sm"}
+          sx={{ cursor: "pointer" }}
+        >
+          Forgot password?
+        </Typography>
         <Divider inset="none">OR</Divider>
         <Stack spacing={1} justifyContent={"space-around"}>
           <CreateAccountBtn />
@@ -101,6 +115,11 @@ export const LoginForm = () => {
           <GoogleSignInBtn />
         </Stack>
       </CardContent>
+      <Modal open={showForgotModal} onClose={() => setShowForgotModal(false)}>
+        <ModalDialog variant="plain">
+          <ForgetPasswordForm />
+        </ModalDialog>
+      </Modal>
     </Card>
   );
 };
