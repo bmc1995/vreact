@@ -1,9 +1,4 @@
-export enum ReducerActionTypes {
-  UPDATE = "UPDATE FIELD",
-  SUBMIT = "SUBMIT FORM",
-  VALIDATE = "VALIDATE FORM",
-}
-
+// Could pre-select based on locale?
 export enum SelectableCountries {
   USA = "United States",
   MX = "Mexico",
