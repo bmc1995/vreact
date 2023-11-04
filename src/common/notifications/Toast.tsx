@@ -10,8 +10,8 @@ export const Toast = ({ toastProps }: { toastProps: ToastAlert }) => {
   const [opacity, setOpacity] = useState(0);
   const dispatch = useDispatch();
 
-  const hideTimerIdRef = useRef<number | null>(null);
-  const removeTimerIdRef = useRef<number | null>(null);
+  const hideTimerIdRef = useRef<number | NodeJS.Timeout | null>(null);
+  const removeTimerIdRef = useRef<number | NodeJS.Timeout | null>(null);
 
   function handleClickRemove() {
     if (hideTimerIdRef.current) clearTimeout(hideTimerIdRef.current);
