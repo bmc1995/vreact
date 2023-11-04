@@ -37,23 +37,21 @@ describe("<App />", () => {
     vi.mock("../features/auth/pages/LoginPage", () => ({
       LoginPage: () => <div data-testid="login-page" />,
     }));
+
+    render(<App />);
   });
 
   it("renders the layout component", () => {
-    render(<App />);
-    screen.debug();
     const layout = screen.findByTestId("layout");
     expect(layout).toBeDefined();
   });
 
   it("renders the network detector", () => {
-    render(<App />);
     const networkDetector = screen.findByTestId("network-detector");
     expect(networkDetector).toBeDefined();
   });
 
   it("renders the login page by default", () => {
-    render(<App />);
     const loginPage = screen.findByTestId("login-page");
     expect(loginPage).toBeDefined();
   });
