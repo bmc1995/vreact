@@ -1,6 +1,19 @@
-import { describe, it } from "vitest";
+import { render, screen } from "@testing-library/react";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+import { Layout } from "../Layout";
+import { Main } from "../Main";
 
 describe("<Layout />", () => {
-  it.skip("Layout tests not defined");
-  it.skip("renders Header, Footer, and Main components");
+  beforeEach(async () => {
+    vi.mock("../Header");
+    render(
+      <Layout>
+        <h1 data-testid="layoutChild">child</h1>
+      </Layout>
+    );
+  });
+  it("renders child components", async () => {
+    const layoutChild = await screen.findByTestId("layoutChild");
+    expect(layoutChild).toBeDefined();
+  });
 });
