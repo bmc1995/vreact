@@ -14,16 +14,6 @@ describe("<App />", () => {
       ),
     }));
 
-    vi.mock("../features/error-boundary/components/ErrorBoundary", () => ({
-      ErrorBoundary: ({
-        children,
-        fallback,
-      }: {
-        children: React.ReactNode;
-        fallback: React.ReactElement;
-      }) => children,
-    }));
-
     vi.mock("../common/Layout/Layout", () => ({
       Layout: ({ children }: { children: React.ReactNode }) => (
         <div data-testid="layout">{children}</div>
