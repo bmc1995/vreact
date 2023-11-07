@@ -5,20 +5,7 @@ import ListItem from "@mui/joy/ListItem";
 import ListItemButton from "@mui/joy/ListItemButton";
 import Person from "@mui/icons-material/Person";
 import viteLogo from "/vite.svg";
-import { useColorScheme } from "@mui/joy";
-
-function ModeToggle() {
-  const { mode, setMode } = useColorScheme();
-  return (
-    <ListItemButton
-      color="neutral"
-      variant="plain"
-      onClick={() => setMode(mode === "dark" ? "light" : "dark")}
-    >
-      <h3>{mode === "dark" ? "☀️" : "🌙"}</h3>
-    </ListItemButton>
-  );
-}
+import { ModeToggle } from "../../../common/Buttons/ModeToggle";
 
 export default function NavigationBar() {
   return (
