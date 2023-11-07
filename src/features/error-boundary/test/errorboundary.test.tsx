@@ -1,7 +1,6 @@
 import { describe, expect, it } from "vitest";
 import ErrorBoundary from "../components/ErrorBoundary";
 import { render, screen } from "@testing-library/react";
-// import "@testing-library/jest-dom";
 
 const childText = "children rendered";
 const fbackText = "fallback rendered";
