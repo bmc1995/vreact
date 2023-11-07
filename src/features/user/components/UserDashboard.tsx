@@ -1,16 +1,4 @@
-import {
-  Box,
-  Card,
-  CardActions,
-  CardContent,
-  CardCover,
-  Stack,
-  Tab,
-  TabList,
-  TabPanel,
-  Tabs,
-  Typography,
-} from "@mui/joy";
+import { Tab, TabList, TabPanel, Tabs } from "@mui/joy";
 import UserSettings from "./UserSettings";
 import UserProfile from "./UserProfile";
 import UserUploads from "./UserUploads";
