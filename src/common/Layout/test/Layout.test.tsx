@@ -14,6 +14,6 @@ describe("<Layout />", () => {
   });
   it("renders child components", async () => {
     const layoutChild = await screen.findByTestId("layoutChild");
-    expect(layoutChild).toBeDefined();
+    expect(layoutChild).toBeInTheDocument();
   });
 });

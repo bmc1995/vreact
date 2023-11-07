@@ -1,6 +1,7 @@
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { describe, expect, it } from "vitest";
 import ErrorBoundary from "../components/ErrorBoundary";
-import { cleanup, render, screen } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
+// import "@testing-library/jest-dom";
 
 const childText = "children rendered";
 const fbackText = "fallback rendered";
@@ -10,22 +11,19 @@ const ThrowErr = () => {
 const fback = <h1 data-testid={fbackText}>{fbackText}</h1>;
 const child = (
   <div>
-    <h1 data-testid={childText}>{childText}</h1>
+    <h1>{childText}</h1>
   </div>
 );
 
-describe("<ErrorBoundary />", async () => {
-  afterEach(() => {
-    cleanup();
-  });
-  it("Displays children if there are no errors", async () => {
+describe("<ErrorBoundary />", () => {
+  it("Displays children if there are no errors", () => {
     render(<ErrorBoundary fallback={fback}>{child}</ErrorBoundary>);
-    const boundary = await screen.findByTestId(childText);
-    expect(boundary).toBeDefined();
+    const boundary = screen.getByText(childText);
+    expect(boundary).toBeInTheDocument();
   });
-  it("Displays a fallback if an error is thrown", async () => {
+  it("Displays a fallback if an error is thrown", () => {
     render(<ErrorBoundary fallback={fback}>{<ThrowErr />}</ErrorBoundary>);
-    const boundary = await screen.findByTestId(fbackText);
-    expect(boundary).toBeDefined();
+    const boundary = screen.getByText(fbackText);
+    expect(boundary).toBeInTheDocument();
   });
 });

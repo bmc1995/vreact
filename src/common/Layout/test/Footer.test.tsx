@@ -21,7 +21,7 @@ describe("<Footer />", () => {
 
   it("renders the footer component", async () => {
     const footer = await screen.findByTestId("footerTest");
-    expect(footer).toBeDefined();
+    expect(footer).toBeInTheDocument();
   });
 
   it("is a `<footer />` HTML Element (Semantic HTML)", async () => {
@@ -31,6 +31,6 @@ describe("<Footer />", () => {
 
   it("renders contained/children components", async () => {
     const footer = await screen.findByText(h1Text);
-    expect(footer).toBeDefined();
+    expect(footer).toBeInTheDocument();
   });
 });

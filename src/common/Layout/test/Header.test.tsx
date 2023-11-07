@@ -11,7 +11,7 @@ describe("<Header />", () => {
     );
     const childEl = await screen.findByTestId("childEl");
 
-    expect(childEl).toBeDefined();
+    expect(childEl).toBeInTheDocument();
   });
   it("Is a `<header />` HTML element (Semantic HTML)", async () => {
     const component = render(

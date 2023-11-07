@@ -24,6 +24,6 @@ describe("<Main />", () => {
       </Main>
     );
     const childEl = await screen.findByTestId("childEl");
-    expect(childEl).toBeDefined();
+    expect(childEl).toBeInTheDocument();
   });
 });
