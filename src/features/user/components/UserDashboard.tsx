@@ -23,11 +23,15 @@ export default function UserDashboard() {
       aria-label="User dashboard tabs"
     >
       <TabList underlinePlacement="right">
-        <Tab indicatorPlacement="right">Profile</Tab>
+        <Tab indicatorPlacement="right" aria-label="User profile tab">
+          Profile
+        </Tab>
         <Tab indicatorPlacement="right" aria-label="User settings tab">
           Settings
         </Tab>
-        <Tab indicatorPlacement="right">Uploads</Tab>
+        <Tab indicatorPlacement="right" aria-label="User uploads tab">
+          Uploads
+        </Tab>
       </TabList>
       <TabPanel aria-label="User profile panel" value={0}>
         <UserProfile />
