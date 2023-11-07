@@ -17,7 +17,6 @@ describe("<Footer />", () => {
       "data-testid",
       "footerTest"
     );
-    component.debug();
   });
 
   it("renders the footer component", async () => {

@@ -1,7 +1,30 @@
-import { describe, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
+import { Header } from "../Header";
+import { render, screen } from "@testing-library/react";
 
 describe("<Header />", () => {
-  it.skip("Header tests not defined");
-  it.skip("Contains navbar");
-  it.skip("Is a `<header />` HTML element (Semantic HTML)");
+  it("Renders children", async () => {
+    render(
+      <Header>
+        <nav data-testid="childEl">Navbar</nav>
+      </Header>
+    );
+    const childEl = await screen.findByTestId("childEl");
+
+    expect(childEl).toBeDefined();
+  });
+  it("Is a `<header />` HTML element (Semantic HTML)", async () => {
+    const component = render(
+      <Header>
+        <nav>Navbar</nav>
+      </Header>
+    );
+    component.container.firstElementChild!.setAttribute(
+      "data-testid",
+      "headerComponent"
+    );
+
+    const headerEl = await screen.findByTestId("headerComponent");
+    expect(headerEl.tagName).toBe("HEADER");
+  });
 });
