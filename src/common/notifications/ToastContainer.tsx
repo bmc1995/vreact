@@ -10,7 +10,7 @@ export const ToastContainer = () => {
     <Stack
       position={"fixed"}
       width={"250px"}
-      zIndex={1}
+      zIndex={10}
       bottom={25}
       left={25}
       display={toastQueue.length ? "flex" : "none"}
