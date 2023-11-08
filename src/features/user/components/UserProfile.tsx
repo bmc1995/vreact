@@ -6,9 +6,10 @@ export default function UserProfile() {
     <Box>
       <Stack flexDirection={"row"}>
         <Avatar
+          aria-label="profile picture"
           sx={{ width: { md: "200px" }, height: { md: "270px" } }}
           variant="outlined"
-          //   alt="ACCOUNT NAME"
+          alt="ACCOUNT NAME"
         ></Avatar>
         <Box flexGrow={1}>
           <Stack justifyContent={"center"} alignItems={"center"} gap={5}>
