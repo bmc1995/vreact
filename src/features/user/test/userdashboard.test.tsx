@@ -1,4 +1,4 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, beforeEach } from "vitest";
 import { render, screen } from "@testing-library/react";
 import UserDashboard from "../components/UserDashboard";
 import { act } from "react-dom/test-utils";
@@ -54,5 +54,43 @@ describe("<UserDashboard />", () => {
     act(() => uploadsTab.click());
 
     expect(uploadsPanel).toBeVisible();
+  });
+  describe("Profile Information", () => {
+    it("displays full name", () => {
+      render(<UserDashboard />);
+      const profileTab = screen.getByLabelText("User profile tab");
+      act(() => profileTab.click());
+
+      const fullNameEl = screen.getByLabelText("full name");
+
+      expect(fullNameEl).toBeVisible();
+    });
+    it("displays email address", () => {
+      render(<UserDashboard />);
+      const profileTab = screen.getByLabelText("User profile tab");
+      act(() => profileTab.click());
+
+      const emailEl = screen.getByLabelText("email address");
+
+      expect(emailEl).toBeVisible();
+    });
+
+    it("displays phone number", () => {
+      render(<UserDashboard />);
+      const profileTab = screen.getByLabelText("User profile tab");
+      act(() => profileTab.click());
+      const phoneNumEl = screen.getByLabelText("phone number");
+
+      expect(phoneNumEl).toBeVisible();
+    });
+    it("displays country", () => {
+      render(<UserDashboard />);
+      const profileTab = screen.getByLabelText("User profile tab");
+      act(() => profileTab.click());
+
+      const countryEl = screen.getByLabelText("country");
+
+      expect(countryEl).toBeVisible();
+    });
   });
 });
