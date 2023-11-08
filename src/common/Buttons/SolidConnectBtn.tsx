@@ -4,7 +4,7 @@ import Solid from "../../assets/solid-emblem.svg";
 export const SolidConnectBtn = () => {
   return (
     <Button
-      startDecorator={<img height={"25px"} src={Solid} />}
+      startDecorator={<img alt="Solid protocol" height={"25px"} src={Solid} />}
       variant="outlined"
       color="neutral"
       size="sm"
