@@ -1,92 +1,56 @@
-import { describe, it, expect, beforeAll, beforeEach } from "vitest";
+import { describe, it, expect, beforeEach } from "vitest";
 import { render, screen } from "@testing-library/react";
 import UserDashboard from "../components/UserDashboard";
 import { act } from "react-dom/test-utils";
 
 describe("<UserDashboard />", () => {
-  it("renders a setttings tab", () => {
+  beforeEach(() => {
     render(<UserDashboard />);
-
-    const settingsTab = screen.getByLabelText("User settings tab");
-
-    expect(settingsTab).toBeVisible();
   });
-  it("renders a profile tab", () => {
-    render(<UserDashboard />);
 
-    const profileTab = screen.getByLabelText("User profile tab");
+  const tabTests = [
+    { label: "User settings tab", panel: "User settings panel" },
+    { label: "User profile tab", panel: "User profile panel" },
+    { label: "User uploads tab", panel: "User uploads panel" },
+  ];
 
-    expect(profileTab).toBeVisible();
+  tabTests.forEach(({ label, panel }) => {
+    it(`renders and displays ${label} when selected`, () => {
+      const tab = screen.getByLabelText(label);
+      const panelEl = screen.getByLabelText(panel);
+
+      act(() => tab.click());
+
+      expect(tab).toBeVisible();
+      expect(panelEl).toBeVisible();
+    });
   });
-  it("renders an uploads tab", () => {
-    render(<UserDashboard />);
 
-    const uploadsTab = screen.getByLabelText("User uploads tab");
-
-    expect(uploadsTab).toBeVisible();
-  });
-  it("displays the User settings panel when tab is selected", () => {
-    render(<UserDashboard />);
-
-    const settingsTab = screen.getByLabelText("User settings tab");
-    const settingsPanel = screen.getByLabelText("User settings panel");
-
-    act(() => settingsTab.click());
-
-    expect(settingsPanel).toBeVisible();
-  });
-  it("displays the User uploads panel when tab is selected", () => {
-    render(<UserDashboard />);
-
-    const uploadsTab = screen.getByLabelText("User uploads tab");
-    const uploadsPanel = screen.getByLabelText("User uploads panel");
-
-    act(() => uploadsTab.click());
-
-    expect(uploadsPanel).toBeVisible();
-  });
-  it("displays the User profile panel when tab is selected", () => {
-    render(<UserDashboard />);
-
-    const profileTab = screen.getByLabelText("User profile tab");
-    const profilePanel = screen.getByLabelText("User profile panel");
-
-    act(() => profileTab.click());
-
-    expect(profilePanel).toBeVisible();
-  });
   describe("Profile Information", () => {
     beforeEach(() => {
-      render(<UserDashboard />);
       const profileTab = screen.getByLabelText("User profile tab");
       act(() => profileTab.click());
     });
 
-    it("displays profile picture", () => {
-      const profilePicEl = screen.getByLabelText("profile picture");
+    const profileInfoTests = [
+      { label: "profile picture" },
+      { label: "full name", expected: "Testerson McTester" },
+      { label: "email address", expected: "test@example.com" },
+      { label: "phone number", expected: "+1 (555) 555-5555" },
+      { label: "country", expected: "United States" },
+      { label: "uploads list" },
+    ];
 
-      expect(profilePicEl).toBeVisible();
-    });
-    it("displays full name", () => {
-      const fullNameEl = screen.getByLabelText("full name");
+    profileInfoTests.forEach(({ label, expected }) => {
+      it(`displays ${label}`, () => {
+        const element = screen.getByLabelText(label);
 
-      expect(fullNameEl).toBeVisible();
-    });
-    it("displays email address", () => {
-      const emailEl = screen.getByLabelText("email address");
+        expect(element).toBeVisible();
 
-      expect(emailEl).toBeVisible();
-    });
-
-    it("displays phone number", () => {
-      const phoneNumEl = screen.getByLabelText("phone number");
-
-      expect(phoneNumEl).toBeVisible();
-    });
-    it("displays country", () => {
-      const countryEl = screen.getByLabelText("country");
-
-      expect(countryEl).toBeVisible();
+        if (expected) {
+          expect(element.textContent).toBe(expected);
+        }
+      });
     });
   });
 });
