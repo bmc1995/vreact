@@ -12,12 +12,16 @@ export default function UserProfile() {
         ></Avatar>
         <Box flexGrow={1}>
           <Stack justifyContent={"center"} alignItems={"center"} gap={5}>
-            <Typography fontSize={34}>Testerson McTester</Typography>
-            <Typography startDecorator={<Email />}>test@example.com</Typography>
-            <Typography startDecorator={<Phone />}>
+            <Typography aria-label="full name" fontSize={34}>
+              Testerson McTester
+            </Typography>
+            <Typography aria-label="email address" startDecorator={<Email />}>
+              test@example.com
+            </Typography>
+            <Typography aria-label="phone number" startDecorator={<Phone />}>
               +1 (555) 555-5555
             </Typography>
-            <Typography startDecorator={<MyLocation />}>
+            <Typography aria-label="country" startDecorator={<MyLocation />}>
               United States
             </Typography>
           </Stack>
