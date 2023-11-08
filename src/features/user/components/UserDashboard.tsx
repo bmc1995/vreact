@@ -9,8 +9,9 @@ export default function UserDashboard() {
       orientation="vertical"
       defaultValue={0}
       aria-label="User dashboard tabs"
+      sx={{ minHeight: "100vh" }}
     >
-      <TabList underlinePlacement="right">
+      <TabList variant="soft" underlinePlacement="right">
         <Tab indicatorPlacement="right" aria-label="User profile tab">
           Profile
         </Tab>

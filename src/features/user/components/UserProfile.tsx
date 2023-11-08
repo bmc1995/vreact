@@ -19,13 +19,13 @@ function CardGenerator(images: { desc: string; src: string; name: string }[]) {
     <Grid
       aria-label="uploads list"
       container
-      sm={8}
-      md={4}
-      spacing={4}
-      justifyContent={"space-evenly"}
+      justifyContent={"flex-start"}
+      alignItems={"flex-start"}
+      margin={"0 auto"}
+      spacing={2}
     >
       {images.map(({ desc, src, name }) => (
-        <Grid key={generateUUID()}>
+        <Grid xs={12} sm={6} md={4} lg={3} key={generateUUID()}>
           <Card variant="outlined" sx={{ width: "300px", margin: "auto" }}>
             <CardOverflow>
               <AspectRatio ratio="1">
@@ -99,7 +99,7 @@ export default function UserProfile() {
             direction={{ sm: "column" }}
             justifyContent={"center"}
             alignItems={"center"}
-            gap={5}
+            gap={2}
           >
             <Typography aria-label="email address" startDecorator={<Email />}>
               test@example.com
