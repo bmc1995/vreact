@@ -4,7 +4,7 @@ import Google from "../../assets/google-emblem.svg";
 export const GoogleSignInBtn = () => {
   return (
     <Button
-      startDecorator={<img width={"25px"} src={Google} />}
+      startDecorator={<img alt="Google" width={"25px"} src={Google} />}
       variant="outlined"
       color="neutral"
       size="sm"

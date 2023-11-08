@@ -6,6 +6,7 @@ import { NetworkDetector } from "../features/network-detector/NetworkDetector";
 import { SignUpPage } from "../features/auth/pages/SignUpPage";
 import { ToastContainer } from "../common/notifications/ToastContainer";
 import { LoginPage } from "../features/auth/pages/LoginPage";
+import UserDashboard from "../features/user/components/UserDashboard";
 function App() {
   return (
     <CssVarsProvider defaultMode={"system"}>
@@ -14,7 +15,8 @@ function App() {
           <ErrorBoundary fallback={<h1>Something went wrong</h1>}>
             <Layout>
               <ToastContainer />
-              <LoginPage />
+              <UserDashboard />
+              {/* <LoginPage /> */}
               {/* <SignUpPage /> */}
             </Layout>
           </ErrorBoundary>
