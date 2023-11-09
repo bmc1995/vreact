@@ -9,7 +9,7 @@ describe("<Main />", () => {
         <nav>Navbar</nav>
       </Main>
     );
-    component.container.firstElementChild!.setAttribute(
+    component.container.firstElementChild?.setAttribute(
       "data-testid",
       "mainComponent"
     );

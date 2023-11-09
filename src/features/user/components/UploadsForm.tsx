@@ -9,7 +9,7 @@ export const UploadsForm = () => {
   };
 
   return (
-    <Box component="form" onSubmit={handleSubmit(onSubmit)}>
+    <Box component="form" onSubmit={() => handleSubmit(onSubmit)}>
       <FormControl>
         <FormLabel>Upload image</FormLabel>
         <Controller

@@ -41,8 +41,9 @@ export const SignUpForm = () => {
     },
   });
 
-  const onSubmit: SubmitHandler<z.infer<typeof SignupFormSchema>> = (data) =>
+  const onSubmit: SubmitHandler<z.infer<typeof SignupFormSchema>> = (data) => {
     console.log(data);
+  };
 
   return (
     <Card>
@@ -59,7 +60,7 @@ export const SignUpForm = () => {
             gridTemplateColumns: { sm: "repeat(2, minmax(80px, 1fr))" },
             gap: "1.5rem",
           }}
-          onSubmit={handleSubmit(onSubmit, console.error)}
+          onSubmit={() => handleSubmit(onSubmit, console.error)}
         >
           <FormControl error={!!errors.email}>
             <FormLabel>Email Address</FormLabel>

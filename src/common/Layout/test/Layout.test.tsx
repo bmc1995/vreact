@@ -3,7 +3,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import { Layout } from "../Layout";
 
 describe("<Layout />", () => {
-  beforeEach(async () => {
+  beforeEach(() => {
     vi.mock("../Header");
     render(
       <Layout>

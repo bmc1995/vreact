@@ -19,7 +19,9 @@ describe("<UserDashboard />", () => {
       const tab = screen.getByLabelText(label);
       const panelEl = screen.getByLabelText(panel);
 
-      act(() => tab.click());
+      act(() => {
+        tab.click();
+      });
 
       expect(tab).toBeVisible();
       expect(panelEl).toBeVisible();
@@ -29,7 +31,9 @@ describe("<UserDashboard />", () => {
   describe("Profile Information", () => {
     beforeEach(() => {
       const profileTab = screen.getByLabelText("User profile tab");
-      act(() => profileTab.click());
+      act(() => {
+        profileTab.click();
+      });
     });
 
     const profileInfoTests = [

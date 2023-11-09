@@ -6,14 +6,14 @@ describe("<Footer />", () => {
   const h1Text = "The Footer";
   beforeEach(async () => {
     vi.clearAllMocks();
-    vi.importActual("@mui/joy");
+    await vi.importActual("@mui/joy");
 
     const component = render(
       <Footer>
         <h1>{h1Text}</h1>
       </Footer>
     );
-    component.container.firstElementChild!.setAttribute(
+    component.container.firstElementChild?.setAttribute(
       "data-testid",
       "footerTest"
     );

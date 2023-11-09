@@ -1,4 +1,4 @@
-import { Card, CardContent, CardCover, Typography } from "@mui/joy";
+import { Card, CardCover } from "@mui/joy";
 import { UserSettingsForm } from "./UserSettingsForm";
 
 export default function UserSettings() {

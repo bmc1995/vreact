@@ -5,7 +5,7 @@ import store from "../../../app/redux/store";
 import { DisplayDuration } from "./enums";
 
 export const dispatchToast = (msg: string, color: ColorPaletteProp): void => {
-  let duration =
+  const duration =
     color === "danger" ? DisplayDuration.ALERT : DisplayDuration.NORMAL;
   store.dispatch(
     addToast({

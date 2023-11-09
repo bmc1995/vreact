@@ -8,7 +8,13 @@ module.exports = {
     "plugin:react/recommended",
     "plugin:react/jsx-runtime",
   ],
-  ignorePatterns: ["dist", ".eslintrc.cjs"],
+  ignorePatterns: [
+    "dist",
+    ".eslintrc.cjs",
+    "vitest.config.ts",
+    "vite.config.ts",
+    "/test/setup.ts",
+  ],
   parser: "@typescript-eslint/parser",
   plugins: ["react-refresh"],
   rules: {
@@ -16,5 +22,8 @@ module.exports = {
       "warn",
       { allowConstantExport: true },
     ],
+  },
+  parserOptions: {
+    project: "./tsconfig.json",
   },
 };

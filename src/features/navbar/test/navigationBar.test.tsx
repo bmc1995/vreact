@@ -3,10 +3,10 @@ import { describe, expect, it, vi } from "vitest";
 import NavigationBar from "../components/NavigationBar";
 import { ModeToggle } from "../../../common/Buttons/ModeToggle";
 
-describe("<NavigationBar />", () => {
-  vi.importMock<typeof ModeToggle>("../../../common/Buttons/ModeToggle");
+describe("<NavigationBar />", async () => {
+  await vi.importMock<typeof ModeToggle>("../../../common/Buttons/ModeToggle");
   vi.mock("@mui/joy", async () => {
-    const actual = await vi.importActual<{}>("@mui/joy");
+    const actual = await vi.importActual<object>("@mui/joy");
 
     return {
       ...actual,

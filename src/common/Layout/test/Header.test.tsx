@@ -19,7 +19,7 @@ describe("<Header />", () => {
         <nav>Navbar</nav>
       </Header>
     );
-    component.container.firstElementChild!.setAttribute(
+    component.container.firstElementChild?.setAttribute(
       "data-testid",
       "headerComponent"
     );

@@ -1,4 +1,4 @@
-import { Card, CardCover } from "@mui/joy";
+import { Card } from "@mui/joy";
 import { UploadsForm } from "./UploadsForm";
 
 export default function UserUploads() {

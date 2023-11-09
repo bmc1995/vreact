@@ -14,15 +14,13 @@ export const generateOptionsFromEnum = () => {
   return opts;
 };
 //TODO D.R.Y
-import { ControllerRenderProps } from "react-hook-form";
-export const generateOptionsFromEnumRHF = (
-  fieldProp?: ControllerRenderProps<any, any>
-) => {
+import { FieldValues } from "react-hook-form";
+export const generateOptionsFromEnumRHF = (fieldValues?: FieldValues) => {
   const opts = [];
   const c = Object.values(SelectableCountries);
   for (const iterator in SelectableCountries) {
     opts.push(
-      <Option {...fieldProp} value={iterator} key={iterator}>
+      <Option {...fieldValues} value={iterator} key={iterator}>
         {c.shift()}
       </Option>
     );

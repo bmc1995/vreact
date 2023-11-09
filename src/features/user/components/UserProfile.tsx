@@ -68,15 +68,13 @@ function CardGenerator(images: { desc: string; src: string; name: string }[]) {
 }
 
 export default function UserProfile() {
-  const images = useMemo(
-    () =>
-      Array(10).fill({
-        src: "/vite.svg",
-        name: "Vite",
-        desc: "The Vite logo.",
-      }),
-    []
-  );
+  const images = useMemo(() => {
+    return Array<{ src: string; name: string; desc: string }>(10).fill({
+      src: "/vite.svg",
+      name: "Vite",
+      desc: "The Vite logo.",
+    });
+  }, []);
 
   return (
     <Box>

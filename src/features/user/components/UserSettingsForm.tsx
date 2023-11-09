@@ -35,7 +35,9 @@ export const UserSettingsForm = () => {
 
   const onSubmit: SubmitHandler<z.infer<typeof UserSettingsFormSchema>> = (
     data
-  ) => console.log(data);
+  ) => {
+    console.log(data);
+  };
 
   return (
     <Card>
@@ -52,7 +54,7 @@ export const UserSettingsForm = () => {
             gridTemplateColumns: { sm: "repeat(2, minmax(80px, 1fr))" },
             gap: "1.5rem",
           }}
-          onSubmit={handleSubmit(onSubmit, console.error)}
+          onSubmit={() => handleSubmit(onSubmit, console.error)}
         >
           <FormControl error={!!errors.firstName}>
             <FormLabel>First Name</FormLabel>

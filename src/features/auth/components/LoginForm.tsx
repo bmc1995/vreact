@@ -24,6 +24,7 @@ import { CreateAccountBtn } from "../../../common/Buttons/CreateAccountBtn";
 import formSchema from "../utils/zod/LoginSchema";
 import { useState } from "react";
 import { ForgetPasswordForm } from "./ForgotPasswordForm";
+import { z } from "zod";
 
 export const LoginForm = () => {
   const [showForgotModal, setShowForgotModal] = useState<boolean>(false);
@@ -33,9 +34,13 @@ export const LoginForm = () => {
     formState: { errors },
   } = useForm({
     resolver: zodResolver(formSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
   });
 
-  const onSubmit: SubmitHandler<any> = (data) => {
+  const onSubmit: SubmitHandler<z.infer<typeof formSchema>> = (data) => {
     console.log(data);
   };
 
@@ -53,7 +58,7 @@ export const LoginForm = () => {
             display: "grid",
             gap: "1.5rem",
           }}
-          onSubmit={handleSubmit(onSubmit)}
+          onSubmit={() => handleSubmit(onSubmit)}
         >
           <FormControl error={!!errors.email}>
             <FormLabel>Email Address</FormLabel>
@@ -101,7 +106,9 @@ export const LoginForm = () => {
           </CardActions>
         </Box>
         <Typography
-          onClick={() => setShowForgotModal(true)}
+          onClick={() => {
+            setShowForgotModal(true);
+          }}
           marginTop={"1rem"}
           fontSize={"sm"}
           sx={{ cursor: "pointer" }}
@@ -115,7 +122,12 @@ export const LoginForm = () => {
           <GoogleSignInBtn />
         </Stack>
       </CardContent>
-      <Modal open={showForgotModal} onClose={() => setShowForgotModal(false)}>
+      <Modal
+        open={showForgotModal}
+        onClose={() => {
+          setShowForgotModal(false);
+        }}
+      >
         <ModalDialog variant="plain">
           <ForgetPasswordForm />
         </ModalDialog>

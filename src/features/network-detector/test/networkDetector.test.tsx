@@ -8,7 +8,7 @@ import { act } from "react-dom/test-utils";
 describe("<NetworkDetector />", () => {
   vi.mock("../../../common/notifications/utils/dispatchToast");
 
-  const triggerOnline = () =>
+  const triggerOnline = () => {
     act(() => {
       Object.defineProperty(navigator, "onLine", {
         value: true,
@@ -16,7 +16,8 @@ describe("<NetworkDetector />", () => {
       });
       window.dispatchEvent(new Event("online"));
     });
-  const triggerOffline = () =>
+  };
+  const triggerOffline = () => {
     act(() => {
       Object.defineProperty(navigator, "onLine", {
         value: false,
@@ -24,6 +25,7 @@ describe("<NetworkDetector />", () => {
       });
       window.dispatchEvent(new Event("offline"));
     });
+  };
 
   beforeEach(() => {
     vi.clearAllMocks();

@@ -1,7 +1,7 @@
 import { Box } from "@mui/joy";
 import { FC, PropsWithChildren } from "react";
 
-export const Main: FC<PropsWithChildren<unknown>> = ({ children }) => {
+export const Main: FC<PropsWithChildren> = ({ children }) => {
   return (
     <Box
       sx={(theme) => ({

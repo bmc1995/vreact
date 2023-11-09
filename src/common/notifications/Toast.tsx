@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { ToastAlert, removeToast } from "../../app/redux/slices/toastSlice";
 import { Alert } from "@mui/joy";
@@ -13,7 +13,7 @@ export const Toast = ({ toastProps }: { toastProps: ToastAlert }) => {
   const hideTimerIdRef = useRef<number | NodeJS.Timeout | null>(null);
   const removeTimerIdRef = useRef<number | NodeJS.Timeout | null>(null);
 
-  function handleClickRemove() {
+  const handleClickRemove = useCallback(() => {
     if (hideTimerIdRef.current) clearTimeout(hideTimerIdRef.current);
     setOpacity(0);
     hideTimerIdRef.current = setTimeout(() => {
@@ -21,7 +21,7 @@ export const Toast = ({ toastProps }: { toastProps: ToastAlert }) => {
         dispatch(removeToast(id));
       }, 50);
     }, 200);
-  }
+  }, [dispatch, id]);
 
   useEffect(() => {
     setOpacity(1);
@@ -35,7 +35,7 @@ export const Toast = ({ toastProps }: { toastProps: ToastAlert }) => {
       if (hideTimerIdRef.current) clearTimeout(hideTimerIdRef.current);
       if (removeTimerIdRef.current) clearTimeout(removeTimerIdRef.current);
     };
-  }, [dispatch, duration, id]);
+  }, [dispatch, duration, handleClickRemove, id]);
 
   return (
     <Alert

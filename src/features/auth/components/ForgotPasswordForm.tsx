@@ -14,7 +14,6 @@ import {
   ModalClose,
   Typography,
 } from "@mui/joy";
-import { ModalCloseRoot } from "@mui/joy/ModalClose/ModalClose";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { z } from "zod";
 
@@ -51,7 +50,7 @@ export const ForgetPasswordForm = () => {
             display: "grid",
             gap: "1.5rem",
           }}
-          onSubmit={handleSubmit(onSubmit)}
+          onSubmit={() => handleSubmit(onSubmit)}
         >
           <Typography sx={{ userSelect: "none" }} fontSize={"sm"}>
             You will receive a link to reset your password
