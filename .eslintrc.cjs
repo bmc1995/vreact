@@ -7,6 +7,7 @@ module.exports = {
     "plugin:react-hooks/recommended",
     "plugin:react/recommended",
     "plugin:react/jsx-runtime",
+    "prettier",
   ],
   ignorePatterns: [
     "dist",
@@ -25,5 +26,10 @@ module.exports = {
   },
   parserOptions: {
     project: "./tsconfig.json",
+  },
+  settings: {
+    react: {
+      version: "detect",
+    },
   },
 };
