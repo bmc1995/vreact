@@ -49,7 +49,8 @@
   },
   "lint-staged": {
     "*!(*spec).(ts|tsx)": [
-      "eslint, prettier --write --ignore-unknown"
+      "eslint",
+      "prettier --check --ignore-unknown"
     ]
   }
 }
