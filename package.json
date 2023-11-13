@@ -48,7 +48,7 @@
     "vitest": "^0.34.6"
   },
   "lint-staged": {
-    "*!(*spec).(ts|tsx)": [
+    "*!(*test).(ts|tsx)": [
       "eslint",
       "prettier --check --ignore-unknown"
     ]
