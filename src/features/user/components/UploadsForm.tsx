@@ -1,5 +1,5 @@
-import { useForm, Controller, FieldValues } from "react-hook-form";
-import { Box, Button, FormControl, FormLabel, Input } from "@mui/joy";
+import { useForm, Controller, FieldValues } from 'react-hook-form';
+import { Box, Button, FormControl, FormLabel, Input } from '@mui/joy';
 
 export const UploadsForm = () => {
   const { handleSubmit, control } = useForm();
@@ -9,18 +9,18 @@ export const UploadsForm = () => {
   };
 
   return (
-    <Box component="form" onSubmit={() => handleSubmit(onSubmit)}>
+    <Box component='form' onSubmit={e => void handleSubmit(onSubmit)(e)}>
       <FormControl>
         <FormLabel>Upload image</FormLabel>
         <Controller
-          name="textFile"
+          name='textFile'
           control={control}
-          defaultValue=""
-          render={({ field }) => <Input {...field} type="file" />}
+          defaultValue=''
+          render={({ field }) => <Input {...field} type='file' />}
         />
       </FormControl>
 
-      <Button type="submit">Submit</Button>
+      <Button type='submit'>Submit</Button>
     </Box>
   );
 };

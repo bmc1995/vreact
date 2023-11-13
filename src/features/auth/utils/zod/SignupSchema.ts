@@ -1,5 +1,5 @@
-import { z } from "zod";
-import { SelectableCountries } from "../enums";
+import { z } from 'zod';
+import { SelectableCountries } from '../enums';
 
 const SignupFormSchema = z
   .object({
@@ -10,13 +10,13 @@ const SignupFormSchema = z
     lastName: z.string().trim().optional(),
     country: z
       .nativeEnum(...[SelectableCountries])
-      .or(z.literal(""))
+      .or(z.literal(''))
       .optional(),
     cellPhone: z.string().trim().optional(),
   })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords do not match",
-    path: ["confirmPassword"],
+  .refine(data => data.password === data.confirmPassword, {
+    message: 'Passwords must match',
+    path: ['confirmPassword'],
   });
 
 export default SignupFormSchema;
