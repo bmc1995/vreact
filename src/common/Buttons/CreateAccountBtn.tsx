@@ -1,15 +1,18 @@
-import { Button } from "@mui/joy";
-import viteLogo from "/vite.svg";
+import { Button } from '@mui/joy';
+import viteLogo from '/vite.svg';
+import { useLinkClickHandler } from 'react-router-dom';
 
-export const CreateAccountBtn = () => {
+export const CreateAccountBtn = ({ to }: { to: string }) => {
+  const handleClick = useLinkClickHandler(to);
   return (
     <Button
-      startDecorator={<img alt="vite" width={"25px"} src={viteLogo} />}
-      variant="outlined"
-      color="neutral"
-      size="sm"
+      startDecorator={<img alt='vite' width={'25px'} src={viteLogo} />}
+      variant='outlined'
+      color='neutral'
+      onClick={handleClick}
+      size='sm'
       sx={{
-        justifyContent: "space-between",
+        justifyContent: 'space-between',
       }}
     >
       Create Account

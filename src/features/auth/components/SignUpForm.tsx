@@ -1,7 +1,7 @@
-import { useForm, SubmitHandler, Controller } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm, SubmitHandler, Controller } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 
-import { InfoOutlined } from "@mui/icons-material";
+import { InfoOutlined } from '@mui/icons-material';
 import {
   Box,
   Button,
@@ -16,12 +16,13 @@ import {
   Select,
   Stack,
   Typography,
-} from "@mui/joy";
+} from '@mui/joy';
 
-import formSchema from "../utils/zod/SignupSchema";
-import { generateOptionsFromEnumRHF } from "../utils/generateOptionsFromEnum";
-import { z } from "zod";
-import SignupFormSchema from "../utils/zod/SignupSchema";
+import formSchema from '../utils/zod/SignupSchema';
+import { generateOptionsFromEnumRHF } from '../utils/generateOptionsFromEnum';
+import { z } from 'zod';
+import SignupFormSchema from '../utils/zod/SignupSchema';
+import { useLinkClickHandler } from 'react-router-dom';
 
 export const SignUpForm = () => {
   const {
@@ -31,45 +32,46 @@ export const SignUpForm = () => {
   } = useForm<z.infer<typeof SignupFormSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: "",
-      cellPhone: "",
-      country: "",
-      confirmPassword: "",
-      password: "",
-      firstName: "",
-      lastName: "",
+      email: '',
+      cellPhone: '',
+      country: '',
+      confirmPassword: '',
+      password: '',
+      firstName: '',
+      lastName: '',
     },
   });
 
-  const onSubmit: SubmitHandler<z.infer<typeof SignupFormSchema>> = (data) => {
+  const onSubmit: SubmitHandler<z.infer<typeof SignupFormSchema>> = data => {
     console.log(data);
   };
 
+  const cancelClick = useLinkClickHandler('/');
   return (
     <Card>
       <CardContent>
-        <Typography level="title-lg" startDecorator={<InfoOutlined />}>
+        <Typography level='title-lg' startDecorator={<InfoOutlined />}>
           Create Account
         </Typography>
-        <Divider inset="none" />
+        <Divider inset='none' />
         <Box
-          width={"600px"}
-          component={"form"}
+          width={'600px'}
+          component={'form'}
           sx={{
-            display: "grid",
-            gridTemplateColumns: { sm: "repeat(2, minmax(80px, 1fr))" },
-            gap: "1.5rem",
+            display: 'grid',
+            gridTemplateColumns: { sm: 'repeat(2, minmax(80px, 1fr))' },
+            gap: '1.5rem',
           }}
-          onSubmit={() => handleSubmit(onSubmit, console.error)}
+          onSubmit={e => {
+            void handleSubmit(onSubmit, console.error)(e);
+          }}
         >
           <FormControl error={!!errors.email}>
             <FormLabel>Email Address</FormLabel>
             <Controller
-              name="email"
+              name='email'
               control={control}
-              render={({ field }) => (
-                <Input {...field} type="email" autoComplete="email" />
-              )}
+              render={({ field }) => <Input {...field} type='email' autoComplete='email' />}
             />
             {errors.email && (
               <FormHelperText>
@@ -78,19 +80,13 @@ export const SignUpForm = () => {
               </FormHelperText>
             )}
           </FormControl>
-          <Stack sx={{ gridColumn: "1" }} justifyContent={"space-between"}>
+          <Stack sx={{ gridColumn: '1' }} justifyContent={'space-between'}>
             <FormControl error={!!errors.password}>
               <FormLabel>Create Password</FormLabel>
               <Controller
-                name="password"
+                name='password'
                 control={control}
-                render={({ field }) => (
-                  <Input
-                    {...field}
-                    type="password"
-                    autoComplete="new-password"
-                  />
-                )}
+                render={({ field }) => <Input {...field} type='password' autoComplete='new-password' />}
               />
               {errors.password && (
                 <FormHelperText>
@@ -102,15 +98,9 @@ export const SignUpForm = () => {
             <FormControl error={!!errors.confirmPassword}>
               <FormLabel>Confirm Password</FormLabel>
               <Controller
-                name="confirmPassword"
+                name='confirmPassword'
                 control={control}
-                render={({ field }) => (
-                  <Input
-                    {...field}
-                    type="password"
-                    autoComplete="new-password"
-                  />
-                )}
+                render={({ field }) => <Input {...field} type='password' autoComplete='new-password' />}
               />
               {errors.confirmPassword && (
                 <FormHelperText>
@@ -120,35 +110,27 @@ export const SignUpForm = () => {
               )}
             </FormControl>
           </Stack>
-          <Divider sx={{ gridColumn: "1/-1" }}>Optional</Divider>
+          <Divider sx={{ gridColumn: '1/-1' }}>Optional</Divider>
           <FormControl>
             <FormLabel>First Name</FormLabel>
-            <Controller
-              name="firstName"
-              control={control}
-              render={({ field }) => <Input {...field} />}
-            />
+            <Controller name='firstName' control={control} render={({ field }) => <Input {...field} />} />
           </FormControl>
           <FormControl>
             <FormLabel>Last Name</FormLabel>
-            <Controller
-              name="lastName"
-              control={control}
-              render={({ field }) => <Input {...field} />}
-            />
+            <Controller name='lastName' control={control} render={({ field }) => <Input {...field} />} />
           </FormControl>
           <FormControl>
             <FormLabel>Country</FormLabel>
             <Controller
-              name="country"
+              name='country'
               control={control}
               render={({ field }) => (
                 <Select
                   // {...field}
-                  color="neutral"
+                  color='neutral'
                   disabled={false}
-                  placeholder="Choose Country…"
-                  variant="outlined"
+                  placeholder='Choose Country…'
+                  variant='outlined'
                 >
                   {generateOptionsFromEnumRHF(field)}
                 </Select>
@@ -158,18 +140,16 @@ export const SignUpForm = () => {
           <FormControl>
             <FormLabel>Cell Phone</FormLabel>
             <Controller
-              name="cellPhone"
+              name='cellPhone'
               control={control}
-              render={({ field }) => (
-                <Input {...field} placeholder="(555) 555-5555" />
-              )}
+              render={({ field }) => <Input {...field} placeholder='(555) 555-5555' />}
             />
           </FormControl>
-          <CardActions buttonFlex={1} sx={{ gridColumn: "1/-1" }}>
-            <Button variant="outlined" type="submit">
+          <CardActions buttonFlex={1} sx={{ gridColumn: '1/-1' }}>
+            <Button variant='outlined' type='submit'>
               Submit
             </Button>
-            <Button color="danger" variant="outlined">
+            <Button color='danger' variant='outlined' onClick={cancelClick}>
               Cancel
             </Button>
           </CardActions>
