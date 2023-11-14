@@ -6,8 +6,11 @@ import ListItemButton from '@mui/joy/ListItemButton';
 import Person from '@mui/icons-material/Person';
 import viteLogo from '/vite.svg';
 import { ModeToggle } from '../../../common/Buttons/ModeToggle';
+import { useLinkClickHandler } from 'react-router-dom';
 
 export default function NavigationBar() {
+  const homeClickHandler = useLinkClickHandler('/');
+  const personClickHandler = useLinkClickHandler('/dashboard');
   return (
     <Box
       component='nav'
@@ -18,25 +21,21 @@ export default function NavigationBar() {
     >
       <List role='menubar' orientation='horizontal' sx={{ padding: 0, marginRight: '.75rem', height: '75px' }}>
         <ListItem role='none'>
-          <ListItemButton role='menuitem' component='a' href='#NavHomeBtn' aria-label='Home'>
+          <ListItemButton role='menuitem' component='a' href='#NavHomeBtn' onClick={homeClickHandler} aria-label='Home'>
             <img src={viteLogo} className='logo' alt='Vite logo' />
           </ListItemButton>
         </ListItem>
-        <ListItem role='none' sx={{ marginInlineStart: 'auto' }}>
-          <ListItemButton role='menuitem' component='a' href='#NavBtn'>
-            Products
-          </ListItemButton>
-        </ListItem>
         <ListDivider sx={{ margin: 0 }} />
-        <ListItem role='none' sx={{ minWidth: '100px' }}>
-          <ListItemButton role='menuitem' component='a' sx={{ justifyContent: 'center' }} href='#NavBtn'>
-            Blog
-          </ListItemButton>
-        </ListItem>
-        <ListDivider sx={{ margin: 0 }} />
+        <ListDivider sx={{ margin: 0, marginInlineStart: 'auto' }} />
         <ListItem role='none' sx={{ paddingX: 0 }}>
           <ModeToggle />
-          <ListItemButton role='menuitem' component='a' href='#NavBtn' aria-label='Profile'>
+          <ListItemButton
+            role='menuitem'
+            component='a'
+            onClick={personClickHandler}
+            href='#NavBtn'
+            aria-label='Profile'
+          >
             <Person />
           </ListItemButton>
         </ListItem>

@@ -13,18 +13,18 @@ import {
   FormHelperText,
   Modal,
   ModalDialog,
-} from "@mui/joy";
-import { InfoOutlined } from "@mui/icons-material";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm, SubmitHandler, Controller } from "react-hook-form";
+} from '@mui/joy';
+import { InfoOutlined } from '@mui/icons-material';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 
-import { SolidConnectBtn } from "../../../common/Buttons/SolidConnectBtn";
-import { GoogleSignInBtn } from "../../../common/Buttons/GoogleSignInBtn";
-import { CreateAccountBtn } from "../../../common/Buttons/CreateAccountBtn";
-import formSchema from "../utils/zod/LoginSchema";
-import { useState } from "react";
-import { ForgetPasswordForm } from "./ForgotPasswordForm";
-import { z } from "zod";
+import { SolidConnectBtn } from '../../../common/Buttons/SolidConnectBtn';
+import { GoogleSignInBtn } from '../../../common/Buttons/GoogleSignInBtn';
+import { CreateAccountBtn } from '../../../common/Buttons/CreateAccountBtn';
+import formSchema from '../utils/zod/LoginSchema';
+import { useState } from 'react';
+import { ForgetPasswordForm } from './ForgotPasswordForm';
+import { z } from 'zod';
 
 export const LoginForm = () => {
   const [showForgotModal, setShowForgotModal] = useState<boolean>(false);
@@ -35,89 +35,75 @@ export const LoginForm = () => {
   } = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: "",
-      password: "",
+      email: '',
+      password: '',
     },
   });
 
-  const onSubmit: SubmitHandler<z.infer<typeof formSchema>> = (data) => {
+  const onSubmit: SubmitHandler<z.infer<typeof formSchema>> = data => {
     console.log(data);
   };
 
   return (
     <Card>
       <CardContent>
-        <Typography level="title-lg" startDecorator={<InfoOutlined />}>
+        <Typography level='title-lg' startDecorator={<InfoOutlined />}>
           Login
         </Typography>
-        <Divider inset="none" />
+        <Divider inset='none' />
         <Box
-          component={"form"}
-          width={"300px"}
+          component={'form'}
+          width={'300px'}
           sx={{
-            display: "grid",
-            gap: "1.5rem",
+            display: 'grid',
+            gap: '1.5rem',
           }}
-          onSubmit={() => handleSubmit(onSubmit)}
+          onSubmit={e => {
+            void handleSubmit(onSubmit)(e);
+          }}
         >
           <FormControl error={!!errors.email}>
             <FormLabel>Email Address</FormLabel>
             <Controller
-              name="email"
+              name='email'
               control={control}
-              defaultValue=""
-              render={({ field }) => (
-                <Input {...field} type="email" autoComplete="email" />
-              )}
+              defaultValue=''
+              render={({ field }) => <Input {...field} type='email' autoComplete='email' />}
             />
-            {errors.email && (
-              <FormHelperText>
-                {errors.email.message?.toString()}
-              </FormHelperText>
-            )}
+            {errors.email && <FormHelperText>{errors.email.message?.toString()}</FormHelperText>}
           </FormControl>
           <FormControl error={!!errors.password}>
             <FormLabel>Password</FormLabel>
             <Controller
-              name="password"
+              name='password'
               control={control}
-              defaultValue=""
-              render={({ field }) => (
-                <Input
-                  {...field}
-                  type="password"
-                  autoComplete="current-password"
-                />
-              )}
+              defaultValue=''
+              render={({ field }) => <Input {...field} type='password' autoComplete='current-password' />}
             />
-            {errors.password && (
-              <FormHelperText>
-                {errors.password.message?.toString()}
-              </FormHelperText>
-            )}
+            {errors.password && <FormHelperText>{errors.password.message?.toString()}</FormHelperText>}
           </FormControl>
-          <CardActions buttonFlex={1} sx={{ gridColumn: "1/-1" }}>
-            <Button variant="outlined" type="submit">
+          <CardActions buttonFlex={1} sx={{ gridColumn: '1/-1' }}>
+            <Button variant='outlined' type='submit'>
               Submit
             </Button>
-            <Button color="danger" variant="outlined">
+            {/* <Button color='danger' variant='outlined'>
               Cancel
-            </Button>
+            </Button> */}
           </CardActions>
         </Box>
         <Typography
           onClick={() => {
             setShowForgotModal(true);
           }}
-          marginTop={"1rem"}
-          fontSize={"sm"}
-          sx={{ cursor: "pointer" }}
+          marginTop={'1rem'}
+          fontSize={'sm'}
+          sx={{ cursor: 'pointer' }}
         >
           Forgot password?
         </Typography>
-        <Divider inset="none">OR</Divider>
-        <Stack spacing={1} justifyContent={"space-around"}>
-          <CreateAccountBtn />
+        <Divider inset='none'>OR</Divider>
+        <Stack spacing={1} justifyContent={'space-around'}>
+          <CreateAccountBtn to='/signup' />
           <SolidConnectBtn />
           <GoogleSignInBtn />
         </Stack>
@@ -128,7 +114,7 @@ export const LoginForm = () => {
           setShowForgotModal(false);
         }}
       >
-        <ModalDialog variant="plain">
+        <ModalDialog variant='plain'>
           <ForgetPasswordForm />
         </ModalDialog>
       </Modal>
