@@ -8,6 +8,7 @@ describe('<NavigationBar />', async () => {
   vi.mock('@mui/joy', async () => {
     const actual = await vi.importActual<object>('@mui/joy');
     vi.mock('react-router-dom');
+    vi.mock('react-redux');
 
     return {
       ...actual,

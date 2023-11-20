@@ -1,18 +1,20 @@
-import { useColorScheme, ListItemButton } from "@mui/joy";
+import { LightMode, ModeNight } from '@mui/icons-material';
+import { useColorScheme, ListItemButton } from '@mui/joy';
 
 export function ModeToggle() {
   const { mode, setMode } = useColorScheme();
   return (
     <ListItemButton
-      title="Theme Toggle"
-      color="neutral"
-      variant="plain"
+      title='Theme Toggle'
+      sx={{ borderRadius: '25px' }}
+      color='neutral'
+      variant='outlined'
+      role='menuitem'
       onClick={() => {
-        setMode(mode === "dark" ? "light" : "dark");
-        console.log("awef");
+        setMode(mode === 'dark' ? 'light' : 'dark');
       }}
     >
-      <h3>{mode === "dark" ? "☀️" : "🌙"}</h3>
+      {mode === 'dark' ? <LightMode color='warning' /> : <ModeNight />}
     </ListItemButton>
   );
 }

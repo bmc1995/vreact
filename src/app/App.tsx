@@ -1,15 +1,13 @@
-import '../styles/App.css';
-import ErrorBoundary from '../features/error-boundary/components/ErrorBoundary';
-import { Layout } from '../common/Layout/Layout';
 import { CssBaseline, CssVarsProvider } from '@mui/joy';
+import { RouterProvider } from 'react-router-dom';
+
+import ErrorBoundary from '../features/error-boundary/components/ErrorBoundary';
+
 import { NetworkDetector } from '../features/network-detector/NetworkDetector';
-// import { SignUpPage } from "../features/auth/pages/SignUpPage";
 import { ToastContainer } from '../common/notifications/ToastContainer';
 
-import UserDashboard from '../features/user/components/UserDashboard';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { LoginPage } from '../features/auth/pages/LoginPage';
-import { SignUpPage } from '../features/auth/pages/SignUpPage';
+import '../styles/App.css';
+import { router } from './routing/routes';
 
 function App() {
   return (
@@ -18,15 +16,7 @@ function App() {
         <NetworkDetector>
           <ErrorBoundary fallback={<h1>Something went wrong</h1>}>
             <ToastContainer />
-            <BrowserRouter>
-              <Routes>
-                <Route element={<Layout />}>
-                  <Route path='/' element={<LoginPage />} />
-                  <Route path='/signup' element={<SignUpPage />} />
-                  <Route path='/dashboard' element={<UserDashboard />} />
-                </Route>
-              </Routes>
-            </BrowserRouter>
+            <RouterProvider router={router} fallbackElement={<p>...</p>} />
           </ErrorBoundary>
         </NetworkDetector>
       </CssBaseline>

@@ -25,8 +25,10 @@ import formSchema from '../utils/zod/LoginSchema';
 import { useState } from 'react';
 import { ForgetPasswordForm } from './ForgotPasswordForm';
 import { z } from 'zod';
+import { useLocation, useSubmit } from 'react-router-dom';
 
 export const LoginForm = () => {
+  const routerSubmit = useSubmit();
   const [showForgotModal, setShowForgotModal] = useState<boolean>(false);
   const {
     handleSubmit,
@@ -39,9 +41,12 @@ export const LoginForm = () => {
       password: '',
     },
   });
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const from = params.get('from') || '/protected';
 
   const onSubmit: SubmitHandler<z.infer<typeof formSchema>> = data => {
-    console.log(data);
+    routerSubmit({ ...data, from }, { method: 'post', encType: 'application/json' });
   };
 
   return (
@@ -62,6 +67,7 @@ export const LoginForm = () => {
             void handleSubmit(onSubmit)(e);
           }}
         >
+          <input type='hidden' name='redirectTo' value={from}></input>
           <FormControl error={!!errors.email}>
             <FormLabel>Email Address</FormLabel>
             <Controller
@@ -86,9 +92,6 @@ export const LoginForm = () => {
             <Button variant='outlined' type='submit'>
               Submit
             </Button>
-            {/* <Button color='danger' variant='outlined'>
-              Cancel
-            </Button> */}
           </CardActions>
         </Box>
         <Typography
@@ -103,7 +106,7 @@ export const LoginForm = () => {
         </Typography>
         <Divider inset='none'>OR</Divider>
         <Stack spacing={1} justifyContent={'space-around'}>
-          <CreateAccountBtn to='/signup' />
+          <CreateAccountBtn to='/auth/signup' />
           <SolidConnectBtn />
           <GoogleSignInBtn />
         </Stack>

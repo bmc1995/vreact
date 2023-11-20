@@ -4,13 +4,21 @@ import ListDivider from '@mui/joy/ListDivider';
 import ListItem from '@mui/joy/ListItem';
 import ListItemButton from '@mui/joy/ListItemButton';
 import Person from '@mui/icons-material/Person';
-import viteLogo from '/vite.svg';
+import ViteLogo from '/vite.svg';
 import { ModeToggle } from '../../../common/Buttons/ModeToggle';
-import { useLinkClickHandler } from 'react-router-dom';
+import { useLinkClickHandler, useSubmit } from 'react-router-dom';
+import { LogoutRounded } from '@mui/icons-material';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../app/redux/store';
 
 export default function NavigationBar() {
   const homeClickHandler = useLinkClickHandler('/');
   const personClickHandler = useLinkClickHandler('/dashboard');
+  const logout = useSubmit();
+  const logoutClickHandler = () => {
+    logout(null, { method: 'post', action: '/auth/logout' });
+  };
+  const authenticated = useSelector((state: RootState) => state.user.isAuthenticated);
   return (
     <Box
       component='nav'
@@ -19,26 +27,46 @@ export default function NavigationBar() {
         flexGrow: 1,
       }}
     >
-      <List role='menubar' orientation='horizontal' sx={{ padding: 0, marginRight: '.75rem', height: '75px' }}>
+      <List role='menubar' orientation='horizontal' sx={{ paddingRight: '1rem', height: '55px' }}>
         <ListItem role='none'>
           <ListItemButton role='menuitem' component='a' href='#NavHomeBtn' onClick={homeClickHandler} aria-label='Home'>
-            <img src={viteLogo} className='logo' alt='Vite logo' />
+            <img src={ViteLogo} className='logo' alt='Vite logo' />
           </ListItemButton>
         </ListItem>
         <ListDivider sx={{ margin: 0 }} />
-        <ListDivider sx={{ margin: 0, marginInlineStart: 'auto' }} />
-        <ListItem role='none' sx={{ paddingX: 0 }}>
+        <ListDivider sx={{ marginLeft: 'auto' }} />
+        <ListItem role='none' sx={{ marginY: 'auto' }}>
           <ModeToggle />
-          <ListItemButton
-            role='menuitem'
-            component='a'
-            onClick={personClickHandler}
-            href='#NavBtn'
-            aria-label='Profile'
-          >
-            <Person />
-          </ListItemButton>
         </ListItem>
+
+        {authenticated && (
+          <>
+            <ListItem role='none' sx={{ marginY: 'auto' }}>
+              <ListItemButton
+                sx={{ borderRadius: '25px', marginX: '1rem' }}
+                variant='outlined'
+                role='menuitem'
+                component='a'
+                onClick={personClickHandler}
+                aria-label='Profile'
+              >
+                <Person />
+              </ListItemButton>
+            </ListItem>
+            <ListItem sx={{ marginY: 'auto' }}>
+              <ListItemButton
+                variant='outlined'
+                sx={{ borderRadius: '25px' }}
+                role='menuitem'
+                component='a'
+                onClick={logoutClickHandler}
+                aria-label='Logout'
+              >
+                <LogoutRounded />
+              </ListItemButton>
+            </ListItem>
+          </>
+        )}
       </List>
     </Box>
   );

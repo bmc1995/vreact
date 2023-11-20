@@ -1,6 +1,8 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
+import { RootState } from '../store';
 
 interface IUser {
+  isAuthenticated: boolean;
   id: string;
   email: string;
   firstName?: string;
@@ -12,20 +14,20 @@ type LoginAction = {
   payload: IUser;
 };
 
+const initialState = { isAuthenticated: false, id: '', email: '', firstName: '', country: '' };
+
 export const userSlice = createSlice({
-  name: "user",
-  initialState: {
-    user: <IUser | null>null,
-  },
+  name: 'user',
+  initialState,
   reducers: {
     login: (state, action: LoginAction) => {
-      state.user = action.payload;
+      return { ...state, ...action.payload };
     },
-    logout: (state) => {
-      state.user = null;
+    logout: () => {
+      return initialState;
     },
     update: (state, action: LoginAction) => {
-      state.user = action.payload;
+      return { ...state, ...action.payload };
     },
   },
 });
@@ -33,3 +35,5 @@ export const userSlice = createSlice({
 export const { login, logout, update } = userSlice.actions;
 
 export default userSlice.reducer;
+
+export const selectUser = (state: RootState) => state.user;
