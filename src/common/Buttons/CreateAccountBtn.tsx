@@ -6,7 +6,7 @@ export const CreateAccountBtn = ({ to }: { to: string }) => {
   const handleClick = useLinkClickHandler(to);
   return (
     <Button
-      startDecorator={<img alt='vite' width={'25px'} src={viteLogo} />}
+      startDecorator={<img alt='vite' width={'25px'} height={'25'} src={viteLogo} />}
       variant='outlined'
       color='neutral'
       onClick={handleClick}
