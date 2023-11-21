@@ -5,9 +5,10 @@ import { ModeToggle } from '../../../common/Buttons/ModeToggle';
 
 describe('<NavigationBar />', async () => {
   await vi.importMock<typeof ModeToggle>('../../../common/Buttons/ModeToggle');
+  vi.mock('react-router-dom');
+  vi.mock('react-redux');
   vi.mock('@mui/joy', async () => {
     const actual = await vi.importActual<object>('@mui/joy');
-    vi.mock('react-router-dom');
 
     return {
       ...actual,
@@ -34,4 +35,7 @@ describe('<NavigationBar />', async () => {
     expect(homeBtn).toBeVisible();
     expect(homeBtn).toHaveAttribute('role', 'menuitem');
   });
+
+  it.skip('does not display the profile buttion if not logged in');
+  it.skip('does not display the logout buttion if not logged in');
 });
