@@ -27,14 +27,14 @@ export default function NavigationBar() {
         flexGrow: 1,
       }}
     >
-      <List role='menubar' orientation='horizontal' sx={{ paddingRight: '1rem', height: '55px' }}>
+      <List role='menubar' orientation='horizontal' sx={{ paddingLeft: 0, paddingRight: '1rem', height: '55px' }}>
         <ListItem role='none'>
           <ListItemButton role='menuitem' component='a' href='#NavHomeBtn' onClick={homeClickHandler} aria-label='Home'>
             <img src={ViteLogo} className='logo' alt='Vite logo' />
           </ListItemButton>
         </ListItem>
         <ListDivider sx={{ margin: 0 }} />
-        <ListDivider sx={{ marginLeft: 'auto' }} />
+        <ListDivider sx={{ marginLeft: 'auto', visibility: { sm: 'initial', xs: 'hidden' } }} />
         <ListItem role='none' sx={{ marginY: 'auto' }}>
           <ModeToggle />
         </ListItem>
@@ -43,7 +43,7 @@ export default function NavigationBar() {
           <>
             <ListItem role='none' sx={{ marginY: 'auto' }}>
               <ListItemButton
-                sx={{ borderRadius: '25px', marginX: '1rem' }}
+                sx={{ borderRadius: '25px', marginX: { sm: '1rem', xs: '0' } }}
                 variant='outlined'
                 role='menuitem'
                 component='a'
