@@ -3,7 +3,7 @@ import { UploadsForm } from './forms/UploadsForm';
 
 export default function UserUploads() {
   return (
-    <Card title='User Uploads Card'>
+    <Card variant='soft' title='User Uploads Card'>
       <UploadsForm />
     </Card>
   );
