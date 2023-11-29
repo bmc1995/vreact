@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import UserSettingsFormSchema from '../utils/zod/UserSettingsSchema';
+import UserSettingsFormSchema from '../../utils/zod/UserSettingsSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ChangeCircleSharp, InfoOutlined } from '@mui/icons-material';
 import {
@@ -20,8 +20,8 @@ import {
 } from '@mui/joy';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import { useState } from 'react';
-import { ChangePwDialog } from './ChangePwDialog';
-import { ChangeEmailDialog } from './ChangeEmailDialog';
+import { ChangePwDialog } from './ChangePwForm';
+import { ChangeEmailDialog } from './ChangeEmailForm';
 
 export const UserSettingsForm = () => {
   const [showChangePwDialog, setShowChangePwDialog] = useState(false);
