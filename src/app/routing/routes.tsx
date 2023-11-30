@@ -1,6 +1,6 @@
 import { createBrowserRouter, createRoutesFromElements, Route } from 'react-router-dom';
 import { Layout } from '../../common/Layout/Layout';
-import UserDashboard from '../../features/user/components/UserDashboard';
+import UserDashboard from '../../features/user/components/dashboard/UserDashboard';
 import { protectedLoader } from './authLoader';
 import AuthRoutes from '../../features/auth/Routes';
 

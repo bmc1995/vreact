@@ -1,7 +1,7 @@
 import { Tab, TabList, TabPanel, Tabs } from '@mui/joy';
-import UserSettings from './UserSettings';
-import UserProfile from './UserProfile';
-import UserUploads from './UserUploads';
+import UserSettings from '../userSettings/UserSettings';
+import UserProfile from '../profile/UserProfile';
+import UserUploads from '../upload/UserUploads';
 
 export default function UserDashboard() {
   return (
