@@ -1,5 +1,5 @@
 export enum DisplayDuration {
   ALERT = 0,
-  NORMAL = 5500,
-  LONG = 10000,
+  NORMAL = 5e3,
+  LONG = 1e4,
 }

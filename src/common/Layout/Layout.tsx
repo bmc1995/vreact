@@ -14,7 +14,7 @@ export const Layout = () => {
       <Main>
         <Outlet />
       </Main>
-      <Footer>{'This is a footer'}</Footer>
+      <Footer>Vreact Starter &copy;2023</Footer>
     </Box>
   );
 };

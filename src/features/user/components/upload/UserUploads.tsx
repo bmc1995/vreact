@@ -1,5 +1,5 @@
 import { Card } from '@mui/joy';
-import { UploadsForm } from './UploadsForm';
+import { UploadsForm } from './forms/UploadsForm';
 
 export default function UserUploads() {
   return (

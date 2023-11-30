@@ -20,8 +20,8 @@ import {
 } from '@mui/joy';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import { useState } from 'react';
-import { ChangePwDialog } from './../forms/ChangePwForm';
-import { ChangeEmailDialog } from './../forms/ChangeEmailForm';
+import { ChangePwDialog } from './ChangePwForm';
+import { ChangeEmailDialog } from './ChangeEmailForm';
 
 export const UserSettingsForm = () => {
   const [showChangePwDialog, setShowChangePwDialog] = useState(false);
