@@ -23,7 +23,7 @@ import { GoogleSignInBtn } from '../../../common/Buttons/GoogleSignInBtn';
 import { CreateAccountBtn } from '../../../common/Buttons/CreateAccountBtn';
 import formSchema from '../utils/zod/LoginSchema';
 import { useState } from 'react';
-import { ForgetPasswordForm } from './ForgotPasswordForm';
+import { ForgotPasswordForm } from './ForgotPasswordForm';
 import { z } from 'zod';
 import { useLocation, useSubmit } from 'react-router-dom';
 
@@ -118,7 +118,7 @@ export const LoginForm = () => {
         }}
       >
         <ModalDialog variant='plain'>
-          <ForgetPasswordForm />
+          <ForgotPasswordForm />
         </ModalDialog>
       </Modal>
     </Card>
