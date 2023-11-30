@@ -20,7 +20,7 @@ import { z } from 'zod';
 const ForgotPwSchema = z.object({ email: z.string().email() });
 type ForgotPwSchemaType = z.infer<typeof ForgotPwSchema>;
 
-export const ForgetPasswordForm = () => {
+export const ForgotPasswordForm = () => {
   const {
     handleSubmit,
     control,
