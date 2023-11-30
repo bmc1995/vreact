@@ -1,5 +1,5 @@
 import { Sheet } from '@mui/joy';
-import { UserSettingsForm } from './forms/UserSettingsForm';
+import { UserSettingsForm } from '../forms/UserSettingsForm';
 
 export default function UserSettings() {
   return (
