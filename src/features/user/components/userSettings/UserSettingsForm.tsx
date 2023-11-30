@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import UserSettingsFormSchema from '../utils/zod/UserSettingsSchema';
+import UserSettingsFormSchema from '../../utils/zod/UserSettingsSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ChangeCircleSharp, InfoOutlined } from '@mui/icons-material';
 import {
