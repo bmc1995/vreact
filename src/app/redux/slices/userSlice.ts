@@ -1,38 +1,41 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../store';
+import { ROLES } from '../../../features/user/utils/zod/roles';
 
-interface IUser {
+export interface IUser {
   isAuthenticated: boolean;
+  role: `${ROLES}`;
   id: string;
   email: string;
   firstName?: string;
   country?: string;
 }
 
-type LoginAction = {
-  type: string;
-  payload: IUser;
+const initialState: IUser | null = {
+  isAuthenticated: false,
+  id: '',
+  email: '',
+  firstName: '',
+  country: '',
+  role: ROLES.REGULAR,
 };
-
-const initialState = { isAuthenticated: false, id: '', email: '', firstName: '', country: '' };
 
 export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    login: (state, action: LoginAction) => {
-      return { ...state, ...action.payload };
+    login: (state, action: PayloadAction<IUser>) => {
+      return {
+        ...state,
+        ...action.payload,
+        isAuthenticated: true,
+      };
     },
-    logout: () => {
-      return initialState;
-    },
-    update: (state, action: LoginAction) => {
-      return { ...state, ...action.payload };
-    },
+    logout: () => initialState,
   },
 });
 
-export const { login, logout, update } = userSlice.actions;
+export const { login, logout } = userSlice.actions;
 
 export default userSlice.reducer;
 
