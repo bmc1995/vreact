@@ -18,7 +18,7 @@ export default function NavigationBar() {
   const logoutClickHandler = () => {
     logout(null, { method: 'post', action: '/auth/logout' });
   };
-  const authenticated = useSelector((state: RootState) => state.user.isAuthenticated);
+  const authenticated = useSelector((state: RootState) => !!state.auth.user);
   return (
     <Box
       component='nav'
