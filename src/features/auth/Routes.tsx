@@ -8,9 +8,7 @@ async function loginAction({ request }: LoaderFunctionArgs) {
   try {
     await fakeAuthProvider.signin({ email, password });
   } catch (error) {
-    return {
-      error: 'Login unsuccessful',
-    };
+    return error;
   }
   return redirect(from || '/protected');
 }
@@ -20,7 +18,8 @@ async function logoutAction() {
 }
 
 function loginLoader() {
-  if (fakeAuthProvider.isAuthenticated()) return redirect('/protected');
+  const user = !!fakeAuthProvider.getUser();
+  if (user) return redirect('/protected');
   return null;
 }
 

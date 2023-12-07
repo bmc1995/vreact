@@ -1,21 +1,17 @@
-import { ROLES } from '../../features/user/utils/zod/roles';
-import { IUser, login, logout } from '../redux/slices/userSlice';
+import { Role } from '../../common/models/role';
+import { User } from '../../common/models/user';
+import { login, logout } from '../redux/slices/authSlice';
+import * as authLocalStorage from '../../features/auth/utils/authLocalStorage';
 import store from '../redux/store';
 /**
  * Represents an authentication provider.
  */
 interface AuthProvider {
   /**
-   * Checks if the user is authenticated.
-   * @returns A boolean indicating whether the user is authenticated.
-   */
-  isAuthenticated: () => boolean;
-
-  /**
    * Retrieves the user information.
    * @returns The user information.
    */
-  getUser(): IUser;
+  getUser(): User | null;
 
   /**
    * Signs in the user with the provided email and password.
@@ -24,7 +20,6 @@ interface AuthProvider {
    * @returns A promise that resolves when the sign-in process is complete.
    */
   signin({ email, password }: { email: string; password: string }): Promise<void>;
-
   /**
    * Signs out the user.
    * @returns A promise that resolves when the sign-out process is complete.
@@ -36,18 +31,36 @@ interface AuthProvider {
  * A fake authentication provider that implements the AuthProvider interface.
  */
 export const fakeAuthProvider: AuthProvider = {
-  isAuthenticated: () => store.getState().user.isAuthenticated,
-  getUser: () => store.getState().user,
+  getUser() {
+    const authState = store.getState().auth;
+    if (authState.user) {
+      return authState.user;
+    }
+    return null;
+  },
 
   async signin({ email, password }: { email: string; password: string }) {
     await new Promise(r => setTimeout(r, 500)); // fake delay
 
-    const fakeUser = { isAuthenticated: true, email, id: 'qwerty:)', role: ROLES.REGULAR };
+    const fakeUser: User = {
+      id: 1,
+      email,
+      newEmail: null,
+      role: Role.ADMIN,
+      firstName: 'John',
+      lastName: 'Doe',
+      activatedAt: null,
+      profilePicture: null,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
 
     if (password === 'regularpassword') {
-      store.dispatch(login(fakeUser));
+      authLocalStorage.saveAuthState({ token: 'token', user: { ...fakeUser, role: Role.USER } });
+      store.dispatch(login({ token: 'token', user: { ...fakeUser, role: Role.USER } }));
     } else if (password === 'adminpassword') {
-      store.dispatch(login({ ...fakeUser, role: ROLES.ADMIN }));
+      authLocalStorage.saveAuthState({ token: 'token', user: { ...fakeUser, role: Role.ADMIN } });
+      store.dispatch(login({ token: 'token', user: { ...fakeUser, role: Role.ADMIN } }));
     } else {
       throw new Error('Invalid credentials');
     }
@@ -55,6 +68,7 @@ export const fakeAuthProvider: AuthProvider = {
 
   async signout() {
     await new Promise(r => setTimeout(r, 500)); // fake delay
+    authLocalStorage.removeAuthState();
     store.dispatch(logout());
   },
 };
