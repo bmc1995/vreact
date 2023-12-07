@@ -1,12 +1,11 @@
-// TODO
-import { configureStore } from "@reduxjs/toolkit";
-import ToastReducer from "./slices/toastSlice";
-import UserReducer from "./slices/userSlice";
+import { configureStore } from '@reduxjs/toolkit';
+import ToastReducer from './slices/toastSlice';
+import AuthReducer from './slices/authSlice';
 
 const store = configureStore({
   reducer: {
     toast: ToastReducer,
-    user: UserReducer,
+    auth: AuthReducer,
   },
 });
 export type RootState = ReturnType<typeof store.getState>;

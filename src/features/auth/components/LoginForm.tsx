@@ -16,19 +16,22 @@ import {
 } from '@mui/joy';
 import { InfoOutlined } from '@mui/icons-material';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm, SubmitHandler, Controller } from 'react-hook-form';
+import { useForm, SubmitHandler, Controller, FieldError } from 'react-hook-form';
 
 import { SolidConnectBtn } from '../../../common/Buttons/SolidConnectBtn';
 import { GoogleSignInBtn } from '../../../common/Buttons/GoogleSignInBtn';
 import { CreateAccountBtn } from '../../../common/Buttons/CreateAccountBtn';
 import formSchema from '../utils/zod/LoginSchema';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ForgotPasswordForm } from './ForgotPasswordForm';
 import { z } from 'zod';
-import { useLocation, useSubmit } from 'react-router-dom';
+import { useActionData, useLocation, useSubmit } from 'react-router-dom';
+import { dispatchToast } from '../../../common/notifications/utils/dispatchToast';
 
 export const LoginForm = () => {
+  const from = new URLSearchParams(useLocation().search).get('from') || '/protected';
   const routerSubmit = useSubmit();
+  const serverErrors = useActionData() as FieldError | undefined;
   const [showForgotModal, setShowForgotModal] = useState<boolean>(false);
   const {
     handleSubmit,
@@ -41,13 +44,14 @@ export const LoginForm = () => {
       password: '',
     },
   });
-  const location = useLocation();
-  const params = new URLSearchParams(location.search);
-  const from = params.get('from') || '/protected';
 
   const onSubmit: SubmitHandler<z.infer<typeof formSchema>> = data => {
     routerSubmit({ ...data, from }, { method: 'post', encType: 'application/json' });
   };
+
+  useEffect(() => {
+    serverErrors?.message && dispatchToast(serverErrors.message, 'danger');
+  }, [serverErrors]);
 
   return (
     <Card>
@@ -67,6 +71,7 @@ export const LoginForm = () => {
             void handleSubmit(onSubmit)(e);
           }}
         >
+          {serverErrors && <Typography color='danger'>{serverErrors.message}</Typography>}
           <input type='hidden' name='redirectTo' value={from}></input>
           <FormControl error={!!errors.email}>
             <FormLabel>Email Address</FormLabel>
