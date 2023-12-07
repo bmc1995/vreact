@@ -2,6 +2,9 @@ import { Tab, TabList, TabPanel, Tabs } from '@mui/joy';
 import UserSettings from '../userSettings/UserSettings';
 import UserProfile from '../profile/UserProfile';
 import UserUploads from '../upload/UserUploads';
+import { AdminPanel } from '../admin/adminPanel';
+import { useRBAC } from '../../../rbac/useRbac';
+import { Role } from '../../../../common/models/role';
 
 export default function UserDashboard() {
   return (
@@ -16,6 +19,12 @@ export default function UserDashboard() {
         <Tab indicatorPlacement='bottom' aria-label='User uploads tab'>
           Uploads
         </Tab>
+        {useRBAC(
+          <Tab indicatorPlacement='bottom' aria-label='Admin tab'>
+            Admin
+          </Tab>,
+          [Role.ADMIN],
+        )}
       </TabList>
       <TabPanel aria-label='User profile panel' value={0}>
         <UserProfile />
@@ -26,6 +35,12 @@ export default function UserDashboard() {
       <TabPanel aria-label='User uploads panel' value={2}>
         <UserUploads />
       </TabPanel>
+      {useRBAC(
+        <TabPanel aria-label='Admin panel' value={3}>
+          <AdminPanel />
+        </TabPanel>,
+        [Role.ADMIN],
+      )}
     </Tabs>
   );
 }
